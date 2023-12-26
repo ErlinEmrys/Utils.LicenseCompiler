@@ -1,0 +1,29 @@
+<Project>
+	<PropertyGroup>
+		<LicGen>$([MSBuild]::NormalizeDirectory("$(MSBuildThisFileDirectory)..\..\tools\$(TargetFramework)"))Erlin.Utils.LicenseCompiler.dll</LicGen>
+	</PropertyGroup>
+
+	<Target Name="AfterResolveReferences">
+		<Message Text="++++++++++++ GENERATING LICENSES +++++++++++" Importance="high"/>
+		<ExecAsync FilePath="dotnet" Arguments="$(LicGen) --s $(SolutionDir) $(LicGenArguments)"/>
+	</Target>
+
+	<!--Parallel Task-->
+	<UsingTask TaskName="ExecAsync" TaskFactory="RoslynCodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll">
+		<ParameterGroup>
+			<FilePath ParameterType="System.String" Required="true"/>
+			<Arguments ParameterType="System.String" Required="true"/>
+		</ParameterGroup>
+
+		<Task>
+			<Code Type="Fragment" Language="cs">
+				<![CDATA[
+	System.Diagnostics.ProcessStartInfo processStartInfo = new System.Diagnostics.ProcessStartInfo(FilePath, Arguments);
+	processStartInfo.UseShellExecute = false;
+	processStartInfo.CreateNoWindow = true;
+	System.Diagnostics.Process.Start(processStartInfo);
+	]]>
+			</Code>
+		</Task>
+	</UsingTask>
+</Project>
