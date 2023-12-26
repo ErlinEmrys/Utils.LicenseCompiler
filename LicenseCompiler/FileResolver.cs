@@ -9,25 +9,25 @@ public static class FileResolver
 	///    All common license file names
 	/// </summary>
 	private static string[] LicenseFileNames { get; } =
-	{
+	[
 		"LICENSE", "LICENCE"
-	};
+	];
 
 	/// <summary>
 	///    All common notice file names
 	/// </summary>
 	private static string[] NoticeFileNames { get; } =
-	{
+	[
 		"NOTICE"
-	};
+	];
 
 	/// <summary>
 	///    All commonly used file extensions
 	/// </summary>
 	private static string[] FileExtensions { get; } =
-	{
+	[
 		string.Empty, ".md", ".txt"
-	};
+	];
 
 	/// <summary>
 	///    Attempt to retrieve content of LICENSE file
