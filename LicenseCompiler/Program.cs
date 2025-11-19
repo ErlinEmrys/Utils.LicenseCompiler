@@ -19,17 +19,18 @@ namespace Erlin.Utils.LicenseCompiler;
 public static class Program
 {
 	public const int PRG_EXIT_OK = 0;
-	public const int PRG_EXIT_LOG_INIT = 100;
-	public const int PRG_EXIT_CONSOLE_ERROR = 200;
-	public const int PRG_EXIT_LOG_FATAL = 300;
-	public const int PRG_EXIT_ARGUMENTS_ERROR = 400;
-	public const int PRG_EXIT_PACKAGES_ERROR = 500;
+	public const int PRG_EXIT_APPLICATION_ERROR = 100;
+	public const int PRG_EXIT_LOG_INIT = 200;
+	public const int PRG_EXIT_CONSOLE_ERROR = 300;
+	public const int PRG_EXIT_LOG_FATAL = 400;
+	public const int PRG_EXIT_ARGUMENTS_ERROR = 500;
+	public const int PRG_EXIT_PACKAGES_ERROR = 600;
 
 	/// <summary>
 	///    Entry point
 	/// </summary>
 	/// <param name="args">Command line arguments</param>
-	public static async Task<int> Main( string[] args )
+	public static async Task< int > Main( string[] args )
 	{
 		try
 		{
@@ -53,12 +54,20 @@ public static class Program
 				return PRG_EXIT_CONSOLE_ERROR;
 			}
 		}
+		finally
+		{
+			if( Debugger.IsAttached )
+			{
+				Console.WriteLine( "Press any key to continue..." );
+				Console.ReadLine();
+			}
+		}
 	}
 
 	/// <summary>
 	///    Logging and error handling
 	/// </summary>
-	private static async Task<int> Run( IEnumerable<string> args )
+	private static async Task< int > Run( IEnumerable< string > args )
 	{
 		LoggingLevelSwitch logLevelSwitch = new();
 		logLevelSwitch.MinimumLevel = LogEventLevel.Warning;
@@ -69,60 +78,71 @@ public static class Program
 
 		LoggerConfiguration logConfig = new();
 		logConfig.MinimumLevel.ControlledBy( logLevelSwitch )
-				.WriteTo.Console(
-						theme: Log.DefaultConsoleColorTheme, outputTemplate: Log.DefaultOutputTemplate,
-						formatProvider: CultureInfo.InvariantCulture )
-				.Enrich.With<ExceptionLogEnricher>();
+				.WriteTo.Console( theme: Log.DefaultConsoleColorTheme, outputTemplate: Log.DefaultOutputTemplate, formatProvider: CultureInfo.InvariantCulture )
+				.Enrich.With< ExceptionLogEnricher >();
 
 		Log.Initialize( logConfig.CreateLogger() );
+		Log.Inf( "APP START" );
+
+		bool appRunning = false;
 
 		try
 		{
-			ParserResult<ProgramArgs>? parsedArgs = Parser.Default.ParseArguments<ProgramArgs>( args );
-			return await parsedArgs.MapResult(
-				a =>
+			ParserResult< ProgramArgs >? parsedArgs = Parser.Default.ParseArguments< ProgramArgs >( args );
+			return await parsedArgs.MapResult( a =>
+			{
+				try
 				{
 					if( a.LogVerbose )
 					{
 						logLevelSwitch.MinimumLevel = LogEventLevel.Verbose;
 					}
 
+					appRunning = true;
 					return Program.RunApp( a );
-				}, errors =>
+				}
+				catch( Exception err )
 				{
-					foreach( Error fArgError in errors )
+					Log.Fatal( err );
+					return Task.FromResult( PRG_EXIT_APPLICATION_ERROR );
+				}
+			}, errors =>
+			{
+				foreach( Error fArgError in errors )
+				{
+					switch( fArgError )
 					{
-						switch( fArgError )
-						{
-							case TokenError tokenError:
-								Log.Inf(
-									"Command line argument error: {Token} {Tag}", tokenError.Token, fArgError.Tag );
+						case TokenError tokenError:
+							Log.Inf( "Command line argument error: {Token} {Tag}", tokenError.Token, fArgError.Tag );
+							break;
 
-								break;
+						case NamedError namedError:
+							Log.Inf( "Command line argument error: {Name} {Tag}", namedError.NameInfo.NameText, fArgError.Tag );
+							break;
 
-							case NamedError namedError:
-								Log.Inf(
-									"Command line argument error: {Name} {Tag}", namedError.NameInfo.NameText,
-									fArgError.Tag );
-
-								break;
-
-							default:
-								Log.Inf( "Command line argument error: {Tag}", fArgError.Tag );
-								break;
-						}
+						default:
+							Log.Inf( "Command line argument error: {Tag}", fArgError.Tag );
+							break;
 					}
+				}
 
-					return Task.FromResult( PRG_EXIT_ARGUMENTS_ERROR );
-				} );
+				return Task.FromResult( PRG_EXIT_ARGUMENTS_ERROR );
+			} );
 		}
 		catch( Exception e )
 		{
+			if( appRunning )
+			{
+				Log.Err( e );
+				return PRG_EXIT_APPLICATION_ERROR;
+			}
+
 			Log.Fatal( e );
 			return PRG_EXIT_LOG_FATAL;
 		}
 		finally
 		{
+			Log.Inf( "APP END" );
 			await Log.DisposeAsync();
 		}
 	}
@@ -130,7 +150,7 @@ public static class Program
 	/// <summary>
 	///    Application
 	/// </summary>
-	private static async Task<int> RunApp( ProgramArgs args )
+	private static async Task< int > RunApp( ProgramArgs args )
 	{
 		if( args.SolutionPath.IsEmpty() )
 		{
@@ -145,8 +165,6 @@ public static class Program
 
 		await OutputWriter.WriteOutputJson( args, result );
 
-		return result.Packages.Any(
-			p => p.LicenseDataType is LicenseDataType.EnumNullError or LicenseDataType.Error )
-			? PRG_EXIT_PACKAGES_ERROR : PRG_EXIT_OK;
+		return result.Packages.Any( p => p.LicenseDataType is LicenseDataType.EnumNullError or LicenseDataType.Error ) ? PRG_EXIT_PACKAGES_ERROR : PRG_EXIT_OK;
 	}
 }

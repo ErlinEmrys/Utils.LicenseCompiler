@@ -10,7 +10,7 @@ public class PackageInfo
 	/// <summary>
 	///    Package ID
 	/// </summary>
-	[JsonIgnore]
+	[ JsonIgnore ]
 	public string Id
 	{
 		get { return $"{Name}@{Version}"; }
@@ -19,12 +19,12 @@ public class PackageInfo
 	/// <summary>
 	///    Name of the package
 	/// </summary>
-	required public string Name { get; set; }
+	public required string Name { get; set; }
 
 	/// <summary>
 	///    Version of the package
 	/// </summary>
-	required public string Version { get; set; }
+	public required string Version { get; set; }
 
 	/// <summary>
 	///    Authors of the package
@@ -59,12 +59,12 @@ public class PackageInfo
 	/// <summary>
 	///    Directory containing *.nuspec file for this package
 	/// </summary>
-	[JsonIgnore]
+	[ JsonIgnore ]
 	public string? NuspecDirPath { get; set; }
 
 	/// <summary>
 	///    Parent result object
 	/// </summary>
-	[JsonIgnore]
-	required public GeneratorResult Parent { get; set; }
+	[ JsonIgnore ]
+	public required GeneratorResult Parent { get; set; }
 }

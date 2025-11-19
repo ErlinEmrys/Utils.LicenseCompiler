@@ -29,14 +29,11 @@ public static class PackageResolver
 	/// <summary>
 	///    Resolves all packages of the project
 	/// </summary>
-	public static async Task<GeneratorResult> ResolvePackages()
+	public static async Task< GeneratorResult > ResolvePackages()
 	{
 		// Retrieve physical path to packages
 		string packagesPath = await PackageResolver.ResolvePackagesPath();
-		GeneratorResult result = new()
-		{
-			PackagesPath = packagesPath
-		};
+		GeneratorResult result = new() { PackagesPath = packagesPath };
 
 		// Retrieve and parse all packages for a project
 		string packagesListText = await PackageResolver.ExecuteCommand( CMD, CMD_ARGS_LIST );
@@ -52,16 +49,14 @@ public static class PackageResolver
 	/// <summary>
 	///    Utility for resolving physical path to local packages cache
 	/// </summary>
-	private static async Task<string> ResolvePackagesPath()
+	private static async Task< string > ResolvePackagesPath()
 	{
 		string packagesPath = await PackageResolver.ExecuteCommand( CMD, CMD_ARGS_PATH );
 
 		const string PATH_PREFIX = "global-packages:";
-		if( packagesPath.IsEmpty()
-			|| !packagesPath.StartsWith( PATH_PREFIX, true, CultureInfo.InvariantCulture ) )
+		if( packagesPath.IsEmpty() || !packagesPath.StartsWith( PATH_PREFIX, true, CultureInfo.InvariantCulture ) )
 		{
-			throw new UnexpectedResultException(
-				$"Unexpected output: {packagesPath} for command: {CMD} {CMD_ARGS_PATH}" );
+			throw new UnexpectedResultException( $"Unexpected output: {packagesPath} for command: {CMD} {CMD_ARGS_PATH}" );
 		}
 
 		packagesPath = packagesPath[ PATH_PREFIX.Length.. ].Trim();
@@ -81,18 +76,14 @@ public static class PackageResolver
 	private static void ReadNuspecFile( PackageInfo package )
 	{
 		Log.Inf( "Reading package {PackageID}", package.Id );
-		package.NuspecDirPath = Path.Combine(
-			package.Parent.PackagesPath, Utils.ToLower( package.Name ),
-			Utils.ToLower( package.Version ) );
+		package.NuspecDirPath = Path.Combine( package.Parent.PackagesPath, Utils.ToLower( package.Name ), Utils.ToLower( package.Version ) );
 
 		string nuspecFilePath = Path.Combine( package.NuspecDirPath, Utils.ToLower( package.Name ) + ".nuspec" );
 
 		if( File.Exists( nuspecFilePath ) )
 		{
 			using StreamReader reader = new( nuspecFilePath );
-			if( PackageResolver.NuspecSerializer.Deserialize( new IgnoreNamespaceXmlReader( reader ) ) is
-				NuspecPackage
-				nuspec )
+			if( PackageResolver.NuspecSerializer.Deserialize( new IgnoreNamespaceXmlReader( reader ) ) is NuspecPackage nuspec )
 			{
 				PackageResolver.FillInfo( nuspec, package );
 			}
@@ -150,8 +141,7 @@ public static class PackageResolver
 			else if( info.License.IsEmpty() && filePath.IsNotEmpty() )
 			{
 				info.LicenseDataType = LicenseDataType.Error;
-				info.License =
-					$"License specified as packaged file: {filePath}, but no such file found in package!";
+				info.License = $"License specified as packaged file: {filePath}, but no such file found in package!";
 			}
 			else if( nuget.License.Type == "expression" )
 			{
@@ -161,8 +151,7 @@ public static class PackageResolver
 				if( info.License.IsEmpty() )
 				{
 					info.LicenseDataType = LicenseDataType.Error;
-					info.License =
-						"License specified as expression, but no expression provided by the package!";
+					info.License = "License specified as expression, but no expression provided by the package!";
 				}
 			}
 		}
@@ -176,8 +165,7 @@ public static class PackageResolver
 			if( info.License.IsEmpty() )
 			{
 				info.LicenseDataType = LicenseDataType.Error;
-				info.License =
-					"License specified as URL, but no URL provided by the package!";
+				info.License = "License specified as URL, but no URL provided by the package!";
 			}
 			else if( !Utils.CheckUrl( info.License ) )
 			{
@@ -189,8 +177,7 @@ public static class PackageResolver
 		if( info.LicenseDataType == LicenseDataType.EnumNullError )
 		{
 			info.LicenseDataType = LicenseDataType.Error;
-			info.License =
-				$"Package does not contain a supported license: {nuget.License?.Type}/{nuget.License?.Text}";
+			info.License = $"Package does not contain a supported license: {nuget.License?.Type}/{nuget.License?.Text}";
 		}
 	}
 
@@ -204,7 +191,7 @@ public static class PackageResolver
 			throw new UnexpectedResultException( "Packages JSON: Missing 'projects' array" );
 		}
 
-		Dictionary<string, PackageInfo> tempDic = new();
+		Dictionary< string, PackageInfo > tempDic = new();
 		foreach( JToken fProject in projects )
 		{
 			if( fProject[ "frameworks" ] is not JArray frameworks )
@@ -222,18 +209,17 @@ public static class PackageResolver
 			}
 		}
 
-		List<PackageInfo> list = tempDic.Values.ToList();
-		list.Sort(
-			( l, r ) =>
+		List< PackageInfo > list = tempDic.Values.ToList();
+		list.Sort( ( l, r ) =>
+		{
+			int comparison = string.Compare( l.Name, r.Name, StringComparison.OrdinalIgnoreCase );
+			if( comparison == 0 )
 			{
-				int comparison = string.Compare( l.Name, r.Name, StringComparison.OrdinalIgnoreCase );
-				if( comparison == 0 )
-				{
-					comparison = string.Compare( l.Version, r.Version, StringComparison.OrdinalIgnoreCase );
-				}
+				comparison = string.Compare( l.Version, r.Version, StringComparison.OrdinalIgnoreCase );
+			}
 
-				return comparison;
-			} );
+			return comparison;
+		} );
 
 		result.AddPackages( list );
 	}
@@ -241,20 +227,18 @@ public static class PackageResolver
 	/// <summary>
 	///    Reads basic packages info from JSON list
 	/// </summary>
-	private static void PackageArrToInfo(
-		GeneratorResult genResult, Dictionary<string, PackageInfo> result, JArray? array )
+	private static void PackageArrToInfo( GeneratorResult genResult, Dictionary< string, PackageInfo > result, JArray? array )
 	{
 		if( array != null )
 		{
 			foreach( JToken fPackage in array )
 			{
-				string? id = fPackage[ "id" ]?.Value<string>();
-				string? version = fPackage[ "resolvedVersion" ]?.Value<string>();
+				string? id = fPackage[ "id" ]?.Value< string >();
+				string? version = fPackage[ "resolvedVersion" ]?.Value< string >();
 
 				if( id.IsEmpty() || version.IsEmpty() )
 				{
-					throw new UnexpectedResultException(
-						$"Packages JSON: Package missing 'id' or 'version': {fPackage}" );
+					throw new UnexpectedResultException( $"Packages JSON: Package missing 'id' or 'version': {fPackage}" );
 				}
 
 				PackageInfo info = new()
@@ -275,11 +259,10 @@ public static class PackageResolver
 	/// <param name="cmd">Command to execute</param>
 	/// <param name="cmdArgs">Command arguments</param>
 	/// <returns>Command result</returns>
-	private static async Task<string> ExecuteCommand( string cmd, string cmdArgs )
+	private static async Task< string > ExecuteCommand( string cmd, string cmdArgs )
 	{
 		int cmdErrorCode = 0;
-		( string cmdOutput, string cmdError ) = await Command.ReadAsync(
-			cmd, cmdArgs,
+		( string cmdOutput, string cmdError ) = await Command.ReadAsync( cmd, cmdArgs,
 			handleExitCode: code =>
 			{
 				cmdErrorCode = code;
@@ -288,10 +271,7 @@ public static class PackageResolver
 
 		if( cmdErrorCode != 0 )
 		{
-			throw new UnexpectedResultException(
-				$"CMD: {cmd} {cmdArgs}{Environment.NewLine}"
-				+ $"ERROR: {cmdError}{Environment.NewLine}"
-				+ $"OUTPUT: {cmdOutput}" );
+			throw new UnexpectedResultException( $"CMD: {cmd} {cmdArgs}{Environment.NewLine}ERROR: {cmdError}{Environment.NewLine}OUTPUT: {cmdOutput}" );
 		}
 
 		return cmdOutput;

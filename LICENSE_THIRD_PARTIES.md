@@ -38,7 +38,18 @@ Third party licenses
 >>
 >
 
-> Erlin.Lib.Common [2.0.5]
+> ConfigureAwait.Fody [3.3.2]
+> ---------------------------
+>
+> Homepage: <https://github.com/Fody/ConfigureAwait>
+>
+> Authors: Cameron MacFarland, Simon Cropp
+>
+> License:
+>> [MIT](https://spdx.org/licenses/MIT.html)
+>
+
+> Erlin.Lib.Common [2.1.0]
 > ------------------------
 >
 > Homepage: <https://github.com/ErlinEmrys/Lib.Common>
@@ -70,11 +81,22 @@ Third party licenses
 >>   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 >>   SOFTWARE.
 >>
->> #### Third party licenses may be applicable. These have been disclosed in [THIRD_PARTIES.md](LICENSE_THIRD_PARTIES.md)
->>
 >
 
-> Newtonsoft.Json [13.0.3]
+> Fody [6.9.3]
+> ------------
+>
+> Homepage: <https://github.com/Fody/Fody>
+>
+> Authors: The Fody Team
+>
+> Copyright: Copyright (c) The Fody Team and contributors
+>
+> License:
+>> [MIT](https://spdx.org/licenses/MIT.html)
+>
+
+> Newtonsoft.Json [13.0.4]
 > ------------------------
 >
 > Homepage: <https://www.newtonsoft.com/json>
@@ -107,18 +129,20 @@ Third party licenses
 >>
 >
 
-> Serilog [3.0.1]
+> Serilog [4.3.0]
 > ---------------
 >
 > Homepage: <https://serilog.net/>
 >
 > Authors: Serilog Contributors
 >
+> Copyright: Copyright © Serilog Contributors
+>
 > License:
 >> [Apache-2.0](https://spdx.org/licenses/Apache-2.0.html)
 >
 
-> Serilog.Sinks.Console [4.1.0]
+> Serilog.Sinks.Console [6.1.1]
 > -----------------------------
 >
 > Homepage: <https://github.com/serilog/serilog-sinks-console>

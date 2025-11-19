@@ -8,34 +8,24 @@ public static class FileResolver
 	/// <summary>
 	///    All common license file names
 	/// </summary>
-	private static string[] LicenseFileNames { get; } =
-	[
-		"LICENSE", "LICENCE"
-	];
+	private static string[] LicenseFileNames { get; } = [ "LICENSE", "LICENCE" ];
 
 	/// <summary>
 	///    All common notice file names
 	/// </summary>
-	private static string[] NoticeFileNames { get; } =
-	[
-		"NOTICE"
-	];
+	private static string[] NoticeFileNames { get; } = [ "NOTICE" ];
 
 	/// <summary>
 	///    All commonly used file extensions
 	/// </summary>
-	private static string[] FileExtensions { get; } =
-	[
-		string.Empty, ".md", ".txt"
-	];
+	private static HashSet< string > FileExtensions { get; } = [ string.Empty, ".md", ".txt" ];
 
 	/// <summary>
 	///    Attempt to retrieve content of LICENSE file
 	/// </summary>
 	public static string? GetLicenseFile( string? nugetPath, string? licenseFilePath )
 	{
-		return FileResolver.GetFile(
-			nugetPath, licenseFilePath, FileResolver.LicenseFileNames, FileResolver.FileExtensions );
+		return FileResolver.GetFile( nugetPath, licenseFilePath, FileResolver.LicenseFileNames, FileResolver.FileExtensions );
 	}
 
 	/// <summary>
@@ -49,8 +39,7 @@ public static class FileResolver
 	/// <summary>
 	///    Attempt to retrieve content of a file
 	/// </summary>
-	private static string? GetFile(
-		string? nugetPath, string? filePath, IEnumerable<string> fileNames, IEnumerable<string> fileExtensions )
+	private static string? GetFile( string? nugetPath, string? filePath, IEnumerable< string > fileNames, HashSet< string > fileExtensions )
 	{
 		ArgumentException.ThrowIfNullOrEmpty( nugetPath );
 

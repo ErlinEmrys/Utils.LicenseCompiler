@@ -29,9 +29,12 @@ public static class OutputWriter
 		await using StreamWriter stream = new( filePath );
 		await using JsonTextWriter writer = new( stream );
 
-		writer.Formatting = Formatting.Indented;
-		writer.Indentation = 1;
-		writer.IndentChar = '\t';
+		if( args.OutputJsonIndented )
+		{
+			writer.Formatting = Formatting.Indented;
+			writer.Indentation = 1;
+			writer.IndentChar = '\t';
+		}
 
 		JsonSerializer serializer = new();
 		serializer.NullValueHandling = NullValueHandling.Ignore;
@@ -94,7 +97,6 @@ public static class OutputWriter
 					case LicenseDataType.Expression:
 						string url = ExpressionLicenseResolver.Resolve( fPackage.License );
 						await stream.WriteLineAsync( $"[{fPackage.License}]({url})", 2 );
-
 						break;
 
 					default:
@@ -121,9 +123,7 @@ public static class OutputWriter
 	/// <summary>
 	///    Writes header to MD
 	/// </summary>
-	private static async Task WriteHeader(
-		this TextWriter stream, string text, char headerSeparator,
-		int indentation = 0 )
+	private static async Task WriteHeader( this TextWriter stream, string text, char headerSeparator, int indentation = 0 )
 	{
 		await stream.WriteLineAsync( text, indentation );
 		await stream.WriteLineAsync( new string( headerSeparator, text.Length ), indentation );

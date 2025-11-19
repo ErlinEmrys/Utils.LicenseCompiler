@@ -4,7 +4,7 @@
 		<PackageId>Erlin.Utils.LicenseCompiler</PackageId>
 		<RootNamespace>Erlin.Utils.LicenseCompiler</RootNamespace>
 		<AssemblyName>Erlin.Utils.LicenseCompiler</AssemblyName>
-		<TargetFramework>net8.0</TargetFramework>
+		<TargetFramework>net10.0</TargetFramework>
 		<OutputType>Exe</OutputType>
 
 		<Nullable>enable</Nullable>
@@ -18,7 +18,7 @@
 		<RunAnalyzers>True</RunAnalyzers>
 		<RunAnalyzersDuringBuild>True</RunAnalyzersDuringBuild>
 		<RunAnalyzersDuringLiveAnalysis>False</RunAnalyzersDuringLiveAnalysis>
-		<TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+		<TreatWarningsAsErrors>False</TreatWarningsAsErrors>
 
 		<WeaverConfiguration>
 			<Weavers>
@@ -26,7 +26,7 @@
 			</Weavers>
 		</WeaverConfiguration>
 
-		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+		<PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
 		<Authors>Erlin Emrys</Authors>
 		<Copyright>© Erlin Emrys</Copyright>
 		<Description>.NET Core build tool for automatic licenses handling</Description>
@@ -56,14 +56,14 @@
 		<PackageReference Include="ConfigureAwait.Fody" Version="3.3.2" >
 			<PrivateAssets>all</PrivateAssets>
 		</PackageReference>
-		<PackageReference Include="Erlin.Lib.Common" Version="2.0.5"/>
-		<PackageReference Include="Fody" Version="6.8.0">
+		<PackageReference Include="Erlin.Lib.Common" Version="2.1.1"/>
+		<PackageReference Include="Fody" Version="6.9.3">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="Newtonsoft.Json" Version="13.0.3"/>
-		<PackageReference Include="Serilog" Version="3.0.1"/>
-		<PackageReference Include="Serilog.Sinks.Console" Version="4.1.0"/>
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.4"/>
+		<PackageReference Include="Serilog" Version="4.3.0"/>
+		<PackageReference Include="Serilog.Sinks.Console" Version="6.1.1"/>
 		<PackageReference Include="SimpleExec" Version="11.0.0"/>
 	</ItemGroup>
 

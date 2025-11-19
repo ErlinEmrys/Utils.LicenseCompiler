@@ -5,63 +5,63 @@ namespace Erlin.Utils.LicenseCompiler;
 /// <summary>
 ///    XML *.nuspec package representation
 /// </summary>
-[XmlRoot( ElementName = "package" )]
+[ XmlRoot( ElementName = "package" ) ]
 public class NuspecPackage
 {
-	[XmlElement( ElementName = "metadata" )]
+	[ XmlElement( ElementName = "metadata" ) ]
 	public NuspecMetadata? Metadata { get; set; }
 }
 
 /// <summary>
 ///    XML *.nuspec package metadata representation
 /// </summary>
-[XmlRoot( ElementName = "metadata" )]
+[ XmlRoot( ElementName = "metadata" ) ]
 public class NuspecMetadata
 {
-	[XmlElement( ElementName = "id" )]
+	[ XmlElement( ElementName = "id" ) ]
 	public string? Id { get; set; }
 
-	[XmlElement( ElementName = "version" )]
+	[ XmlElement( ElementName = "version" ) ]
 	public string? Version { get; set; }
 
-	[XmlElement( ElementName = "authors" )]
+	[ XmlElement( ElementName = "authors" ) ]
 	public string? Authors { get; set; }
 
-	[XmlElement( ElementName = "copyright" )]
+	[ XmlElement( ElementName = "copyright" ) ]
 	public string? Copyright { get; set; }
 
-	[XmlElement( ElementName = "projectUrl" )]
+	[ XmlElement( ElementName = "projectUrl" ) ]
 	public string? ProjectUrl { get; set; }
 
-	[XmlElement( ElementName = "license" )]
+	[ XmlElement( ElementName = "license" ) ]
 	public NuspecLicense? License { get; set; }
 
-	[XmlElement( ElementName = "licenseUrl" )]
+	[ XmlElement( ElementName = "licenseUrl" ) ]
 	public string? LicenseUrl { get; set; }
 
-	[XmlElement( ElementName = "repository" )]
+	[ XmlElement( ElementName = "repository" ) ]
 	public NuspecRepository? Repository { get; set; }
 }
 
 /// <summary>
 ///    XML *.nuspec package license data representation
 /// </summary>
-[XmlRoot( ElementName = "license" )]
+[ XmlRoot( ElementName = "license" ) ]
 public class NuspecLicense
 {
-	[XmlAttribute( AttributeName = "type" )]
+	[ XmlAttribute( AttributeName = "type" ) ]
 	public string? Type { get; set; }
 
-	[XmlText]
+	[ XmlText ]
 	public string? Text { get; set; }
 }
 
 /// <summary>
 ///    XML *.nuspec package repository data representation
 /// </summary>
-[XmlRoot( ElementName = "repository" )]
+[ XmlRoot( ElementName = "repository" ) ]
 public class NuspecRepository
 {
-	[XmlAttribute( AttributeName = "url" )]
+	[ XmlAttribute( AttributeName = "url" ) ]
 	public string? Url { get; set; }
 }
