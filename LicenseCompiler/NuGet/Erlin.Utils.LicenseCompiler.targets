@@ -1,6 +1,6 @@
 <Project>
 	<PropertyGroup>
-		<LicenseCompiler>$([MSBuild]::NormalizeDirectory("$(MSBuildThisFileDirectory)..\..\tools\$(TargetFramework)"))Erlin.Utils.LicenseCompiler.dll</LicenseCompiler>
+		<LicenseCompiler>$([MSBuild]::NormalizeDirectory("$(MSBuildThisFileDirectory)..\..\tools\net10.0"))Erlin.Utils.LicenseCompiler.dll</LicenseCompiler>
 	</PropertyGroup>
 
 	<Target Name="AfterResolveReferences">
