@@ -8,6 +8,7 @@ using Erlin.Lib.Common;
 using Serilog;
 using Serilog.Core;
 using Serilog.Events;
+using Serilog.Extensions.Hosting;
 
 using Log = Erlin.Lib.Common.Log;
 
@@ -70,32 +71,43 @@ public static class Program
 	private static async Task< int > Run( IEnumerable< string > args )
 	{
 		LoggingLevelSwitch logLevelSwitch = new();
-		logLevelSwitch.MinimumLevel = LogEventLevel.Warning;
+		logLevelSwitch.MinimumLevel = LogEventLevel.Information;
 
 #if DEBUG
 		logLevelSwitch.MinimumLevel = LogEventLevel.Debug;
 #endif
 
 		LoggerConfiguration logConfig = new();
-		logConfig.MinimumLevel.ControlledBy( logLevelSwitch )
-				.WriteTo.Console( theme: Log.DefaultConsoleColorTheme, outputTemplate: Log.DefaultOutputTemplate, formatProvider: CultureInfo.InvariantCulture )
-				.Enrich.With< ExceptionLogEnricher >();
+		Program.ConfigureLogging( logConfig, logLevelSwitch, false );
 
-		Log.Initialize( logConfig.CreateLogger() );
-		Log.Inf( "APP START" );
+		ReloadableLogger logger = logConfig.CreateBootstrapLogger();
+		Log.Initialize( logger );
+		Log.Dbg( "APP START" );
 
 		bool appRunning = false;
 
 		try
 		{
-			ParserResult< ProgramArgs >? parsedArgs = Parser.Default.ParseArguments< ProgramArgs >( args );
+			ParserResult< ProgramArgs > parsedArgs = Parser.Default.ParseArguments< ProgramArgs >( args );
 			return await parsedArgs.MapResult( a =>
 			{
 				try
 				{
+					if( a.SolutionPath.IsEmpty() )
+					{
+						a.SolutionPath = Path.GetFullPath( Path.Combine( Directory.GetCurrentDirectory(), @"..\..\..\" ) );
+					}
+
+					Directory.SetCurrentDirectory( a.SolutionPath );
+
 					if( a.LogVerbose )
 					{
 						logLevelSwitch.MinimumLevel = LogEventLevel.Verbose;
+					}
+
+					if( a.LogToFile )
+					{
+						Program.EnableFileLog( logger, logLevelSwitch );
 					}
 
 					appRunning = true;
@@ -103,25 +115,29 @@ public static class Program
 				}
 				catch( Exception err )
 				{
+					Program.EnableFileLog( logger, logLevelSwitch );
+
 					Log.Fatal( err );
 					return Task.FromResult( PRG_EXIT_APPLICATION_ERROR );
 				}
 			}, errors =>
 			{
+				Program.EnableFileLog( logger, logLevelSwitch );
+
 				foreach( Error fArgError in errors )
 				{
 					switch( fArgError )
 					{
 						case TokenError tokenError:
-							Log.Inf( "Command line argument error: {Token} {Tag}", tokenError.Token, fArgError.Tag );
+							Log.Err( "Command line argument error: {Token} {Tag}", tokenError.Token, fArgError.Tag );
 							break;
 
 						case NamedError namedError:
-							Log.Inf( "Command line argument error: {Name} {Tag}", namedError.NameInfo.NameText, fArgError.Tag );
+							Log.Err( "Command line argument error: {Name} {Tag}", namedError.NameInfo.NameText, fArgError.Tag );
 							break;
 
 						default:
-							Log.Inf( "Command line argument error: {Tag}", fArgError.Tag );
+							Log.Err( "Command line argument error: {Tag}", fArgError.Tag );
 							break;
 					}
 				}
@@ -131,6 +147,8 @@ public static class Program
 		}
 		catch( Exception e )
 		{
+			Program.EnableFileLog( logger, logLevelSwitch );
+
 			if( appRunning )
 			{
 				Log.Err( e );
@@ -142,8 +160,36 @@ public static class Program
 		}
 		finally
 		{
-			Log.Inf( "APP END" );
+			Log.Dbg( "APP END" );
 			await Log.DisposeAsync();
+		}
+	}
+
+	private static LoggerConfiguration ConfigureLogging( LoggerConfiguration logConfig, LoggingLevelSwitch logLevelSwitch, bool enableFileLog )
+	{
+		logConfig = logConfig.MinimumLevel.ControlledBy( logLevelSwitch )
+								.WriteTo.Console( theme: Log.DefaultConsoleColorTheme, outputTemplate: Log.DefaultOutputTemplate, formatProvider: CultureInfo.InvariantCulture )
+								.Enrich.With< ExceptionLogEnricher >();
+
+		if( enableFileLog )
+		{
+			logConfig = logConfig.WriteTo.File( Path.Combine( Directory.GetCurrentDirectory(), "Erlin.Utils.LicenseCompiler_Log_.txt" ), outputTemplate: Log.DefaultOutputTemplate, rollingInterval: RollingInterval.Day, formatProvider: CultureInfo.InvariantCulture );
+		}
+
+		return logConfig;
+	}
+
+	private static void EnableFileLog( ReloadableLogger logger, LoggingLevelSwitch logLevelSwitch )
+	{
+		try
+		{
+			logger.Reload( config => Program.ConfigureLogging( config, logLevelSwitch, true ) );
+			Log.Initialize( logger );
+			Log.Dbg( "File log enabled" );
+		}
+		catch( Exception e )
+		{
+			Log.Err( e, "Failed to enable file log" );
 		}
 	}
 
@@ -152,13 +198,6 @@ public static class Program
 	/// </summary>
 	private static async Task< int > RunApp( ProgramArgs args )
 	{
-		if( args.SolutionPath.IsEmpty() )
-		{
-			args.SolutionPath = Path.GetFullPath( Path.Combine( Directory.GetCurrentDirectory(), @"..\..\..\" ) );
-		}
-
-		Directory.SetCurrentDirectory( args.SolutionPath );
-
 		GeneratorResult result = await PackageResolver.ResolvePackages();
 
 		await OutputWriter.WriteOutputMD( args, result );

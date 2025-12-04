@@ -34,6 +34,12 @@ public class ProgramArgs
 	/// <summary>
 	///    Whether the program should be writing more info to the log
 	/// </summary>
-	[ Option( "log", HelpText = "Rise log level to be more verbose" ) ]
+	[ Option( "lv", HelpText = "Rise log level to be more verbose" ) ]
 	public bool LogVerbose { get; set; }
+
+	/// <summary>
+	///    Whether the program should be writing log to file
+	/// </summary>
+	[ Option( "lf", HelpText = "Write log to file" ) ]
+	public bool LogToFile { get; set; }
 }

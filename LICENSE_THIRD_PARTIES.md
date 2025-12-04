@@ -49,7 +49,7 @@ Third party licenses
 >> [MIT](https://spdx.org/licenses/MIT.html)
 >
 
-> Erlin.Lib.Common [2.1.0]
+> Erlin.Lib.Common [2.1.1]
 > ------------------------
 >
 > Homepage: <https://github.com/ErlinEmrys/Lib.Common>
@@ -91,6 +91,136 @@ Third party licenses
 > Authors: The Fody Team
 >
 > Copyright: Copyright (c) The Fody Team and contributors
+>
+> License:
+>> [MIT](https://spdx.org/licenses/MIT.html)
+>
+
+> Microsoft.Extensions.Configuration.Abstractions [10.0.0]
+> --------------------------------------------------------
+>
+> Homepage: <https://dot.net/>
+>
+> Authors: Microsoft
+>
+> Copyright: © Microsoft Corporation. All rights reserved.
+>
+> License:
+>> [MIT](https://spdx.org/licenses/MIT.html)
+>
+
+> Microsoft.Extensions.DependencyInjection [10.0.0]
+> -------------------------------------------------
+>
+> Homepage: <https://dot.net/>
+>
+> Authors: Microsoft
+>
+> Copyright: © Microsoft Corporation. All rights reserved.
+>
+> License:
+>> [MIT](https://spdx.org/licenses/MIT.html)
+>
+
+> Microsoft.Extensions.DependencyInjection.Abstractions [10.0.0]
+> --------------------------------------------------------------
+>
+> Homepage: <https://dot.net/>
+>
+> Authors: Microsoft
+>
+> Copyright: © Microsoft Corporation. All rights reserved.
+>
+> License:
+>> [MIT](https://spdx.org/licenses/MIT.html)
+>
+
+> Microsoft.Extensions.Diagnostics.Abstractions [10.0.0]
+> ------------------------------------------------------
+>
+> Homepage: <https://dot.net/>
+>
+> Authors: Microsoft
+>
+> Copyright: © Microsoft Corporation. All rights reserved.
+>
+> License:
+>> [MIT](https://spdx.org/licenses/MIT.html)
+>
+
+> Microsoft.Extensions.FileProviders.Abstractions [10.0.0]
+> --------------------------------------------------------
+>
+> Homepage: <https://dot.net/>
+>
+> Authors: Microsoft
+>
+> Copyright: © Microsoft Corporation. All rights reserved.
+>
+> License:
+>> [MIT](https://spdx.org/licenses/MIT.html)
+>
+
+> Microsoft.Extensions.Hosting.Abstractions [10.0.0]
+> --------------------------------------------------
+>
+> Homepage: <https://dot.net/>
+>
+> Authors: Microsoft
+>
+> Copyright: © Microsoft Corporation. All rights reserved.
+>
+> License:
+>> [MIT](https://spdx.org/licenses/MIT.html)
+>
+
+> Microsoft.Extensions.Logging [10.0.0]
+> -------------------------------------
+>
+> Homepage: <https://dot.net/>
+>
+> Authors: Microsoft
+>
+> Copyright: © Microsoft Corporation. All rights reserved.
+>
+> License:
+>> [MIT](https://spdx.org/licenses/MIT.html)
+>
+
+> Microsoft.Extensions.Logging.Abstractions [10.0.0]
+> --------------------------------------------------
+>
+> Homepage: <https://dot.net/>
+>
+> Authors: Microsoft
+>
+> Copyright: © Microsoft Corporation. All rights reserved.
+>
+> License:
+>> [MIT](https://spdx.org/licenses/MIT.html)
+>
+
+> Microsoft.Extensions.Options [10.0.0]
+> -------------------------------------
+>
+> Homepage: <https://dot.net/>
+>
+> Authors: Microsoft
+>
+> Copyright: © Microsoft Corporation. All rights reserved.
+>
+> License:
+>> [MIT](https://spdx.org/licenses/MIT.html)
+>
+
+> Microsoft.Extensions.Primitives [10.0.0]
+> ----------------------------------------
+>
+> Homepage: <https://dot.net/>
+>
+> Authors: Microsoft
+>
+> Copyright: © Microsoft Corporation. All rights reserved.
 >
 > License:
 >> [MIT](https://spdx.org/licenses/MIT.html)
@@ -142,10 +272,43 @@ Third party licenses
 >> [Apache-2.0](https://spdx.org/licenses/Apache-2.0.html)
 >
 
+> Serilog.Extensions.Hosting [10.0.0]
+> -----------------------------------
+>
+> Homepage: <https://github.com/serilog/serilog-extensions-hosting>
+>
+> Authors: Microsoft,Serilog Contributors
+>
+> License:
+>> [Apache-2.0](https://spdx.org/licenses/Apache-2.0.html)
+>
+
+> Serilog.Extensions.Logging [10.0.0]
+> -----------------------------------
+>
+> Homepage: <https://github.com/serilog/serilog-extensions-logging>
+>
+> Authors: Microsoft,Serilog Contributors
+>
+> License:
+>> [Apache-2.0](https://spdx.org/licenses/Apache-2.0.html)
+>
+
 > Serilog.Sinks.Console [6.1.1]
 > -----------------------------
 >
 > Homepage: <https://github.com/serilog/serilog-sinks-console>
+>
+> Authors: Serilog Contributors
+>
+> License:
+>> [Apache-2.0](https://spdx.org/licenses/Apache-2.0.html)
+>
+
+> Serilog.Sinks.File [7.0.0]
+> --------------------------
+>
+> Homepage: <https://github.com/serilog/serilog-sinks-file>
 >
 > Authors: Serilog Contributors
 >

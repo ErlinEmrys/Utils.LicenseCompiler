@@ -65,7 +65,7 @@ public static class PackageResolver
 			throw new UnexpectedResultException( $"Packages directory {packagesPath} not exist" );
 		}
 
-		Log.Inf( "Packages path resolved: {Path}", packagesPath );
+		Log.Dbg( "Packages path resolved: {Path}", packagesPath );
 
 		return packagesPath;
 	}
@@ -75,7 +75,7 @@ public static class PackageResolver
 	/// </summary>
 	private static void ReadNuspecFile( PackageInfo package )
 	{
-		Log.Inf( "Reading package {PackageID}", package.Id );
+		Log.Dbg( "Reading package {PackageID}", package.Id );
 		package.NuspecDirPath = Path.Combine( package.Parent.PackagesPath, Utils.ToLower( package.Name ), Utils.ToLower( package.Version ) );
 
 		string nuspecFilePath = Path.Combine( package.NuspecDirPath, Utils.ToLower( package.Name ) + ".nuspec" );
