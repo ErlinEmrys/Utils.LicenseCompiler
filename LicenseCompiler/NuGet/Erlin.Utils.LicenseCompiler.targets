@@ -4,7 +4,7 @@
 	</PropertyGroup>
 
 	<Target Name="AfterResolveReferences">
-		<Message Text="++++++++++++ GENERATING LICENSES +++++++++++" Importance="high"/>
+		<Message Text="Erlin.Utils.LicenseCompiler: Generating licenses for solution: $(SolutionDir)" Importance="high"/>
 		<ExecAsync FilePath="dotnet" Arguments="$(LicenseCompiler) --s $(SolutionDir) $(LicenseCompilerArgs)"/>
 	</Target>
 
