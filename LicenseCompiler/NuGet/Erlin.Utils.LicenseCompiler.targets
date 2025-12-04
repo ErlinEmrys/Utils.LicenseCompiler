@@ -1,16 +1,16 @@
 <Project>
 	<PropertyGroup>
-		<LicenseCompiler>$( [MSBuild]::NormalizeDirectory( "$( MSBuildThisFileDirectory )..\..\tools\net10.0" ) )Erlin.Utils.LicenseCompiler.dll</LicenseCompiler>
+		<LicenseCompiler>$([MSBuild]::NormalizeDirectory("$(MSBuildThisFileDirectory)..\..\tools\net10.0"))Erlin.Utils.LicenseCompiler.dll</LicenseCompiler>
 	</PropertyGroup>
 
 	<Target Name="AfterResolveReferences">
-		<Message Text="Erlin.Utils.LicenseCompiler: Generating licenses for solution: $( SolutionDir ); Arguments: $( LicenseCompilerArgs )" Importance="high"/>
-		<ExecAsync Condition="!$( LicenseCompilerArgs.Contains( '--sync' ) )" FilePath="dotnet" Arguments="$( LicenseCompiler ) --s $( SolutionDir ) $( LicenseCompilerArgs )"/>
-		<ExecSync Condition="$( LicenseCompilerArgs.Contains( '--sync' ) )" FilePath="dotnet" Arguments="$( LicenseCompiler ) --s $( SolutionDir ) $( LicenseCompilerArgs )"/>
+		<Message Text="Erlin.Utils.LicenseCompiler: Generating licenses for solution: $(SolutionDir); Arguments: $(LicenseCompilerArgs)" Importance="high"/>
+		<ExecAsync Condition="!$(LicenseCompilerArgs.Contains('--sync'))" FilePath="dotnet" Arguments="$(LicenseCompiler) --s $(SolutionDir) $(LicenseCompilerArgs)"/>
+		<ExecSync Condition="$(LicenseCompilerArgs.Contains('--sync'))" FilePath="dotnet" Arguments="$(LicenseCompiler) --s $(SolutionDir) $(LicenseCompilerArgs)"/>
 	</Target>
 
 	<!--Parallel Task-->
-	<UsingTask TaskName="ExecAsync" TaskFactory="RoslynCodeTaskFactory" AssemblyFile="$( MSBuildToolsPath )\Microsoft.Build.Tasks.Core.dll">
+	<UsingTask TaskName="ExecAsync" TaskFactory="RoslynCodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll">
 		<ParameterGroup>
 			<FilePath ParameterType="System.String" Required="true"/>
 			<Arguments ParameterType="System.String" Required="true"/>
@@ -19,17 +19,17 @@
 		<Task>
 			<Code Type="Fragment" Language="cs">
 				<![CDATA[
-	System.Diagnostics.ProcessStartInfo processStartInfo = new System.Diagnostics.ProcessStartInfo( FilePath, Arguments );
+	System.Diagnostics.ProcessStartInfo processStartInfo = new System.Diagnostics.ProcessStartInfo(FilePath, Arguments);
 	processStartInfo.UseShellExecute = false;
 	processStartInfo.CreateNoWindow = true;
-	System.Diagnostics.Process.Start( processStartInfo );
+	System.Diagnostics.Process.Start(processStartInfo);
 	]]>
 			</Code>
 		</Task>
 	</UsingTask>
 
 	<!--Sync Task-->
-	<UsingTask TaskName="ExecSync" TaskFactory="RoslynCodeTaskFactory" AssemblyFile="$( MSBuildToolsPath )\Microsoft.Build.Tasks.Core.dll">
+	<UsingTask TaskName="ExecSync" TaskFactory="RoslynCodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll">
 		<ParameterGroup>
 			<FilePath ParameterType="System.String" Required="true"/>
 			<Arguments ParameterType="System.String" Required="true"/>
@@ -38,28 +38,22 @@
 		<Task>
 			<Code Type="Fragment" Language="cs">
 				<![CDATA[
-	System.Diagnostics.ProcessStartInfo processStartInfo = new System.Diagnostics.ProcessStartInfo( FilePath, Arguments );
+	System.Diagnostics.ProcessStartInfo processStartInfo = new System.Diagnostics.ProcessStartInfo(FilePath, Arguments);
 	processStartInfo.UseShellExecute = false;
 	processStartInfo.CreateNoWindow = true;
 	processStartInfo.RedirectStandardOutput = true;
 	processStartInfo.RedirectStandardError = true;
 
-	using( System.Diagnostics.Process process = new System.Diagnostics.Process() )
+	using (System.Diagnostics.Process process = new System.Diagnostics.Process())
 	{
 		process.StartInfo = processStartInfo;
-		process.OutputDataReceived += ( sender, e ) =>
+		process.OutputDataReceived += (sender, e) =>
 		{
-			if( e.Data != null )
-			{
-				Log.LogMessage( Microsoft.Build.Framework.MessageImportance.High, e.Data );
-			}
+			if (e.Data != null) Log.LogMessage(Microsoft.Build.Framework.MessageImportance.High, e.Data);
 		};
-		process.ErrorDataReceived += ( sender, e ) =>
+		process.ErrorDataReceived += (sender, e) =>
 		{
-			if( e.Data != null )
-			{
-				Log.LogError( e.Data );
-			}
+			if (e.Data != null) Log.LogError(e.Data);
 		};
 
 		process.Start();
