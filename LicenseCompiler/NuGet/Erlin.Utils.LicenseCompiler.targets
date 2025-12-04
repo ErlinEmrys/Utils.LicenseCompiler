@@ -21,26 +21,7 @@
 	System.Diagnostics.ProcessStartInfo processStartInfo = new System.Diagnostics.ProcessStartInfo(FilePath, Arguments);
 	processStartInfo.UseShellExecute = false;
 	processStartInfo.CreateNoWindow = true;
-	processStartInfo.RedirectStandardOutput = true;
-	processStartInfo.RedirectStandardError = true;
-
-	using (System.Diagnostics.Process process = new System.Diagnostics.Process())
-	{
-		process.StartInfo = processStartInfo;
-		process.OutputDataReceived += (sender, e) =>
-		{
-			if (e.Data != null) Log.LogMessage(Microsoft.Build.Framework.MessageImportance.High, e.Data);
-		};
-		process.ErrorDataReceived += (sender, e) =>
-		{
-			if (e.Data != null) Log.LogError(e.Data);
-		};
-
-		process.Start();
-		process.BeginOutputReadLine();
-		process.BeginErrorReadLine();
-		process.WaitForExit();
-	}
+	System.Diagnostics.Process.Start(processStartInfo);
 	]]>
 			</Code>
 		</Task>
