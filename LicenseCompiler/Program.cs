@@ -110,6 +110,11 @@ public static class Program
 						Program.EnableFileLog( logger, logLevelSwitch );
 					}
 
+					if( a.SynchronousRun )
+					{
+						Log.Dbg( "Synchronous run" );
+					}
+
 					appRunning = true;
 					return Program.RunApp( a );
 				}

@@ -42,4 +42,10 @@ public class ProgramArgs
 	/// </summary>
 	[ Option( "lf", HelpText = "Write log to file" ) ]
 	public bool LogToFile { get; set; }
+
+	/// <summary>
+	///    Whether the program should be running synchronsously during the build
+	/// </summary>
+	[ Option( "sync", HelpText = "Run synchronsously during the build" ) ]
+	public bool SynchronousRun { get; set; }
 }
