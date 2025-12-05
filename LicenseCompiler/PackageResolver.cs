@@ -19,7 +19,7 @@ public static class PackageResolver
 {
 	private const string CMD = "dotnet";
 	private const string CMD_ARGS_PATH = "nuget locals -l global-packages --force-english-output";
-	private const string CMD_ARGS_LIST = "list package --include-transitive --format json";
+	private const string CMD_ARGS_LIST = "list package --format json";
 
 	/// <summary>
 	///    *.nuspec file serializer
@@ -41,7 +41,7 @@ public static class PackageResolver
 		PackageResolver.ConvertPackagesJson( result, json );
 
 		// Reads all *.nuspec files for each found package
-		ParallelHelper.ForEach( result.Packages, PackageResolver.ReadNuspecFile );
+		ParallelHelper.ForEach( result.Packages, PackageResolver.ReadNuspecFile, true );
 
 		return result;
 	}
@@ -202,10 +202,8 @@ public static class PackageResolver
 			foreach( JToken fFramework in frameworks )
 			{
 				JArray? topLevelPackages = fFramework.SelectToken( "topLevelPackages" ) as JArray;
-				JArray? transitivePackages = fFramework.SelectToken( "transitivePackages" ) as JArray;
 
 				PackageResolver.PackageArrToInfo( result, tempDic, topLevelPackages );
-				PackageResolver.PackageArrToInfo( result, tempDic, transitivePackages );
 			}
 		}
 
