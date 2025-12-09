@@ -6,6 +6,8 @@ using Erlin.Lib.Common.Exceptions;
 using Erlin.Lib.Common.Threading;
 using Erlin.Lib.Common.Xml;
 
+using Microsoft.Build.Construction;
+
 using Newtonsoft.Json.Linq;
 
 using SimpleExec;
@@ -35,6 +37,8 @@ public static class PackageResolver
 		string packagesPath = await PackageResolver.ResolvePackagesPath();
 		GeneratorResult result = new() { PackagesPath = packagesPath };
 
+		PackageResolver.ReadSolution();
+
 		// Retrieve and parse all packages for a project
 		string packagesListText = await PackageResolver.ExecuteCommand( CMD, CMD_ARGS_LIST );
 		JObject json = JObject.Parse( packagesListText );
@@ -44,6 +48,37 @@ public static class PackageResolver
 		ParallelHelper.ForEach( result.Packages, PackageResolver.ReadNuspecFile, true );
 
 		return result;
+	}
+
+	private static void ReadSolution()
+	{
+		const string CS_PROJECT_EXTENSION = ".csproj";
+		const string ITEM_NAME_PACKAGE_REFERENCE = "PackageReference";
+		const string METADATA_NAME_PRIVATE_ASSETS = "PrivateAssets";
+		const string METADATA_NAME_VERSION = "Version";
+		const string METADATA_VALUE_ALL = "all";
+
+		SolutionFile solutionFile = SolutionFile.Parse( "E:\\GIT\\Code\\Utils\\Caffeine\\Erlin.Utils.Caffeine.sln" );
+		foreach( ProjectInSolution fProject in solutionFile.ProjectsInOrder )
+		{
+			if( Path.GetExtension( fProject.AbsolutePath ).EqualsTo( CS_PROJECT_EXTENSION ) )
+			{
+				Log.Dbg( "Reading cs_project: {ProjectPath}", fProject.AbsolutePath );
+
+				ProjectRootElement project = ProjectRootElement.Open( fProject.AbsolutePath );
+				foreach( ProjectItemElement fProjectItem in project.Items )
+				{
+					if( fProjectItem.ItemType.EqualsTo( ITEM_NAME_PACKAGE_REFERENCE ) && !fProjectItem.Metadata.Any( m => m.Name.EqualsTo( METADATA_NAME_PRIVATE_ASSETS ) && m.Value.EqualsTo( METADATA_VALUE_ALL ) ) )
+					{
+						ProjectMetadataElement? version = fProjectItem.Metadata.FirstOrDefault( m => m.Name.EqualsTo( METADATA_NAME_VERSION ) );
+						if( version is not null )
+						{
+							Log.Dbg( "Package reference: {PackageID}@{Version}", fProjectItem.Include, version.Value );
+						}
+					}
+				}
+			}
+		}
 	}
 
 	/// <summary>
