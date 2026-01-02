@@ -1,4 +1,6 @@
+using System.Collections.Concurrent;
 using System.Globalization;
+using System.Reflection;
 using System.Xml.Serialization;
 
 using Erlin.Lib.Common;
@@ -21,7 +23,9 @@ public static class PackageResolver
 {
 	private const string CMD = "dotnet";
 	private const string CMD_ARGS_PATH = "nuget locals -l global-packages --force-english-output";
-	private const string CMD_ARGS_LIST = "list package --format json";
+
+	private static readonly HashSet< string > _idSet = [ ];
+	private static readonly TaskWorker< PackageInfo > _worker = new( "Package_Info_Reader", PackageResolver.ProcessPackage, 32 );
 
 	/// <summary>
 	///    *.nuspec file serializer
@@ -31,26 +35,39 @@ public static class PackageResolver
 	/// <summary>
 	///    Resolves all packages of the project
 	/// </summary>
-	public static async Task< GeneratorResult > ResolvePackages()
+	public static async Task< GeneratorResult > ResolvePackages( ProgramArgs args )
 	{
 		// Retrieve physical path to packages
 		string packagesPath = await PackageResolver.ResolvePackagesPath();
 		GeneratorResult result = new() { PackagesPath = packagesPath };
 
-		PackageResolver.ReadSolution();
+		PackageResolver.ReadSolution( args, result );
 
-		// Retrieve and parse all packages for a project
-		string packagesListText = await PackageResolver.ExecuteCommand( CMD, CMD_ARGS_LIST );
-		JObject json = JObject.Parse( packagesListText );
-		PackageResolver.ConvertPackagesJson( result, json );
+		await _worker.WaitToFinish();
 
-		// Reads all *.nuspec files for each found package
-		ParallelHelper.ForEach( result.Packages, PackageResolver.ReadNuspecFile, true );
+		Comparison< PackageInfo > AlphaSort()
+		{
+			return ( l, r ) =>
+			{
+				int comparison = string.Compare( l.Name, r.Name, StringComparison.OrdinalIgnoreCase );
+				if( comparison == 0 )
+				{
+					comparison = string.Compare( l.Version, r.Version, StringComparison.OrdinalIgnoreCase );
+				}
+
+				return comparison;
+			};
+		}
+
+		result.Packages.Sort( AlphaSort() );
+		result.MicrosoftPackages.Sort( AlphaSort() );
+
+		MicrosoftLicences.ProcessMicrosoftPackages( result );
 
 		return result;
 	}
 
-	private static void ReadSolution()
+	private static void ReadSolution( ProgramArgs args, GeneratorResult result )
 	{
 		const string CS_PROJECT_EXTENSION = ".csproj";
 		const string ITEM_NAME_PACKAGE_REFERENCE = "PackageReference";
@@ -58,7 +75,12 @@ public static class PackageResolver
 		const string METADATA_NAME_VERSION = "Version";
 		const string METADATA_VALUE_ALL = "all";
 
-		SolutionFile solutionFile = SolutionFile.Parse( "E:\\GIT\\Code\\Utils\\Caffeine\\Erlin.Utils.Caffeine.sln" );
+		if( !File.Exists( args.SolutionFilePath ) )
+		{
+			throw new FileNotFoundException( "Solution file not found", args.SolutionFilePath );
+		}
+
+		SolutionFile solutionFile = SolutionFile.Parse( args.SolutionFilePath );
 		foreach( ProjectInSolution fProject in solutionFile.ProjectsInOrder )
 		{
 			if( Path.GetExtension( fProject.AbsolutePath ).EqualsTo( CS_PROJECT_EXTENSION ) )
@@ -68,17 +90,46 @@ public static class PackageResolver
 				ProjectRootElement project = ProjectRootElement.Open( fProject.AbsolutePath );
 				foreach( ProjectItemElement fProjectItem in project.Items )
 				{
-					if( fProjectItem.ItemType.EqualsTo( ITEM_NAME_PACKAGE_REFERENCE ) && !fProjectItem.Metadata.Any( m => m.Name.EqualsTo( METADATA_NAME_PRIVATE_ASSETS ) && m.Value.EqualsTo( METADATA_VALUE_ALL ) ) )
+					if( fProjectItem.ItemType.EqualsTo( ITEM_NAME_PACKAGE_REFERENCE ) &&
+						!fProjectItem.Metadata.Any( m =>
+							m.Name.EqualsTo( METADATA_NAME_PRIVATE_ASSETS ) &&
+							m.Value.EqualsTo( METADATA_VALUE_ALL ) ) )
 					{
 						ProjectMetadataElement? version = fProjectItem.Metadata.FirstOrDefault( m => m.Name.EqualsTo( METADATA_NAME_VERSION ) );
 						if( version is not null )
 						{
-							Log.Dbg( "Package reference: {PackageID}@{Version}", fProjectItem.Include, version.Value );
+							PackageResolver.RegisterPackage( result, fProjectItem.Include, version.Value );
 						}
 					}
 				}
 			}
 		}
+	}
+
+	private static void RegisterPackage( GeneratorResult result, string name, string version )
+	{
+		PackageInfo package = new()
+		{
+			Name = name,
+			Version = version,
+			Parent = result
+		};
+
+		lock( _idSet )
+		{
+			if( _idSet.Add( package.Id ) )
+			{
+				Log.Inf( "Package reference found: {PackageID}", package.Id );
+				_worker.Enqueue( package );
+				result.AddPackage( package );
+			}
+		}
+	}
+
+	private static Task ProcessPackage( PackageInfo package, CancellationToken token = default )
+	{
+		PackageResolver.ReadNuspecFile( package );
+		return Task.CompletedTask;
 	}
 
 	/// <summary>
@@ -110,7 +161,13 @@ public static class PackageResolver
 	/// </summary>
 	private static void ReadNuspecFile( PackageInfo package )
 	{
-		Log.Dbg( "Reading package {PackageID}", package.Id );
+		if( MicrosoftLicences.IsMicrosoftPackage( package.Name ) )
+		{
+			PackageResolver.ProcessMicrosoftPackage( package );
+			return;
+		}
+
+		Log.Dbg( "Reading .nuspec package {PackageID}", package.Id );
 		package.NuspecDirPath = Path.Combine( package.Parent.PackagesPath, Utils.ToLower( package.Name ), Utils.ToLower( package.Version ) );
 
 		string nuspecFilePath = Path.Combine( package.NuspecDirPath, Utils.ToLower( package.Name ) + ".nuspec" );
@@ -121,6 +178,37 @@ public static class PackageResolver
 			if( PackageResolver.NuspecSerializer.Deserialize( new IgnoreNamespaceXmlReader( reader ) ) is NuspecPackage nuspec )
 			{
 				PackageResolver.FillInfo( nuspec, package );
+			}
+		}
+		else
+		{
+			Log.Wrn( "Package {PackageID} not found in {Path}", package.Id, package.NuspecDirPath );
+		}
+	}
+
+	private static void ProcessMicrosoftPackage( PackageInfo package )
+	{
+		Log.Dbg( "Microsoft package found {PackageID}", package.Id );
+		package.Parent.AddMicrosoftPackage( package );
+
+		Assembly? a = null;
+		try
+		{
+			a = Assembly.Load( package.Name ); // + ", Version=" + package.Version + ", Culture=neutral, PublicKeyToken=" );
+		}
+		catch( Exception ex ) when( ex is FileNotFoundException or FileLoadException )
+		{
+		}
+
+		if( a is not null )
+		{
+			AssemblyName[] names = a.GetReferencedAssemblies();
+			foreach( AssemblyName fAssemblyName in names )
+			{
+				if( fAssemblyName.Name.IsNotEmpty() && fAssemblyName.Version is not null )
+				{
+					PackageResolver.RegisterPackage( package.Parent, fAssemblyName.Name, fAssemblyName.Version.ToString() );
+				}
 			}
 		}
 	}
@@ -141,6 +229,23 @@ public static class PackageResolver
 	/// </summary>
 	public static void FillInfo( NuspecMetadata nuget, PackageInfo info )
 	{
+		if( nuget.DependencyGroups?.Length > 0 )
+		{
+			foreach( NuspecDependencyGroup fGroup in nuget.DependencyGroups )
+			{
+				if( fGroup.Dependencies is not null )
+				{
+					foreach( NuspecDependency fDep in fGroup.Dependencies )
+					{
+						if( fDep.Id.IsNotEmpty() && fDep.Version.IsNotEmpty() )
+						{
+							PackageResolver.RegisterPackage( info.Parent, fDep.Id, fDep.Version );
+						}
+					}
+				}
+			}
+		}
+
 		info.Authors = nuget.Authors;
 		info.Copyright = nuget.Copyright;
 		info.Homepage = nuget.ProjectUrl;
@@ -213,6 +318,7 @@ public static class PackageResolver
 		{
 			info.LicenseDataType = LicenseDataType.Error;
 			info.License = $"Package does not contain a supported license: {nuget.License?.Type}/{nuget.License?.Text}";
+			Log.Wrn( "Package {PackageId} does not contain a supported license", info.Id );
 		}
 	}
 

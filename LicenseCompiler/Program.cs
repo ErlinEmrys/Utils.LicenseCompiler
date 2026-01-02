@@ -93,9 +93,13 @@ public static class Program
 			{
 				try
 				{
-					if( a.SolutionPath.IsEmpty() )
+					if( a.SolutionFilePath.IsEmpty() )
 					{
-						a.SolutionPath = Path.GetFullPath( Path.Combine( Directory.GetCurrentDirectory(), @"..\..\..\" ) );
+						string path = Path.GetFullPath( Path.Combine( Directory.GetCurrentDirectory(), @"..\..\..\" ) );
+
+						string? sln = Directory.GetFiles( path, "*.sln", SearchOption.TopDirectoryOnly ).FirstOrDefault();
+
+						a.SolutionFilePath = sln;
 					}
 
 					Directory.SetCurrentDirectory( a.SolutionPath );
@@ -203,7 +207,7 @@ public static class Program
 	/// </summary>
 	private static async Task< int > RunApp( ProgramArgs args )
 	{
-		GeneratorResult result = await PackageResolver.ResolvePackages();
+		GeneratorResult result = await PackageResolver.ResolvePackages( args );
 
 		await OutputWriter.WriteOutputMD( args, result );
 

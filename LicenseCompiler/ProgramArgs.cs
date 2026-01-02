@@ -8,10 +8,18 @@ namespace Erlin.Utils.LicenseCompiler;
 public class ProgramArgs
 {
 	/// <summary>
-	///    Path to solution for which will be licenses generated
+	///    Path to solution file for which will be licenses generated
 	/// </summary>
-	[ Option( 's', HelpText = "Path to the main solution" ) ]
-	public required string SolutionPath { get; set; }
+	[ Option( 's', HelpText = "Path to the solution file" ) ]
+	public required string SolutionFilePath { get; set; }
+
+	/// <summary>
+	///    Path to soultion folder
+	/// </summary>
+	public string SolutionPath
+	{
+		get { return Path.GetDirectoryName( SolutionFilePath ) ?? throw new InvalidOperationException( "Solution path is not set" ); }
+	}
 
 	/// <summary>
 	///    Path for output JSON file

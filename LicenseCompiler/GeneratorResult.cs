@@ -16,14 +16,33 @@ public class GeneratorResult
 	public List< PackageInfo > Packages { get; } = [ ];
 
 	/// <summary>
+	///    List of Microsoft packages
+	/// </summary>
+	public List< PackageInfo > MicrosoftPackages { get; } = [ ];
+
+	/// <summary>
 	///    Adds packages to this result object
 	/// </summary>
 	public void AddPackages( List< PackageInfo > list )
 	{
 		foreach( PackageInfo fPackage in list )
 		{
-			fPackage.Parent = this;
-			Packages.Add( fPackage );
+			AddPackage( fPackage );
 		}
+	}
+
+	/// <summary>
+	///    Adds package to this result object
+	/// </summary>
+	public void AddPackage( PackageInfo package )
+	{
+		package.Parent = this;
+		Packages.Add( package );
+	}
+
+	public void AddMicrosoftPackage( PackageInfo package )
+	{
+		Packages.Remove( package );
+		MicrosoftPackages.Add( package );
 	}
 }

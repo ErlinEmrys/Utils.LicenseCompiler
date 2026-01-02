@@ -80,6 +80,17 @@ public static class OutputWriter
 				await stream.WriteParagraph( $"Copyright: {fPackage.Copyright}", 1 );
 			}
 
+			if( fPackage.RelatedPacakges.Count > 0 )
+			{
+				await stream.WriteLineAsync( "Packages:", 1 );
+				foreach( string fRelatedPackage in fPackage.RelatedPacakges )
+				{
+					await stream.WriteUnorderedListAsync( fRelatedPackage, 2 );
+				}
+
+				await stream.WriteLineAsync( null, 1 );
+			}
+
 			if( fPackage.License.IsNotEmpty() )
 			{
 				await stream.WriteLineAsync( "License:", 1 );
@@ -150,6 +161,18 @@ public static class OutputWriter
 	{
 		await stream.WriteLineAsync( text, indentation );
 		await stream.WriteLineAsync( null, indentation );
+	}
+
+	/// <summary>
+	///    Writes unordered list to MD
+	/// </summary>
+	private static async Task WriteUnorderedListAsync( this TextWriter stream, string? text, int indentation )
+	{
+		if( text.IsNotEmpty() )
+		{
+			await stream.WriteIndentation( text, indentation );
+			await stream.WriteLineAsync( "+ " + text );
+		}
 	}
 
 	/// <summary>

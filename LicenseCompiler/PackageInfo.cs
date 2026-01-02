@@ -57,6 +57,11 @@ public class PackageInfo
 	public string? Notice { get; set; }
 
 	/// <summary>
+	///    Package IDs of related packages
+	/// </summary>
+	public List< string > RelatedPacakges { get; set; } = [ ];
+
+	/// <summary>
 	///    Directory containing *.nuspec file for this package
 	/// </summary>
 	[ JsonIgnore ]
