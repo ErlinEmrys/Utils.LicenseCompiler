@@ -1,4 +1,3 @@
-using System.Collections.Concurrent;
 using System.Globalization;
 using System.Reflection;
 using System.Xml.Serialization;
@@ -45,26 +44,55 @@ public static class PackageResolver
 
 		await _worker.WaitToFinish();
 
-		Comparison< PackageInfo > AlphaSort()
-		{
-			return ( l, r ) =>
-			{
-				int comparison = string.Compare( l.Name, r.Name, StringComparison.OrdinalIgnoreCase );
-				if( comparison == 0 )
-				{
-					comparison = string.Compare( l.Version, r.Version, StringComparison.OrdinalIgnoreCase );
-				}
+		result.Packages.Sort( PackageInfo.AlphaSort );
+		result.MicrosoftPackages.Sort( PackageInfo.AlphaSort );
 
-				return comparison;
-			};
-		}
-
-		result.Packages.Sort( AlphaSort() );
-		result.MicrosoftPackages.Sort( AlphaSort() );
+		PackageResolver.FilterOutDuplicates( result );
 
 		MicrosoftLicences.ProcessMicrosoftPackages( result );
 
 		return result;
+	}
+
+	private static void FilterOutDuplicates( GeneratorResult result )
+	{
+		PackageResolver.FilterOutDuplicates( result.Packages );
+		PackageResolver.FilterOutDuplicates( result.MicrosoftPackages );
+	}
+
+	private static void FilterOutDuplicates( List< PackageInfo > list )
+	{
+		for( int i = 0; i < list.Count; )
+		{
+			PackageInfo first = list[ i ];
+			bool firstStays = true;
+			for( int j = i + 1; j < list.Count; )
+			{
+				PackageInfo second = list[ j ];
+				if( first.Name.EqualsTo( second.Name ) )
+				{
+					if( first.Version > second.Version )
+					{
+						list.RemoveAt( j );
+					}
+					else
+					{
+						list.RemoveAt( i );
+						firstStays = false;
+						break;
+					}
+				}
+				else
+				{
+					j++;
+				}
+			}
+
+			if( firstStays )
+			{
+				i++;
+			}
+		}
 	}
 
 	private static void ReadSolution( ProgramArgs args, GeneratorResult result )
@@ -111,7 +139,7 @@ public static class PackageResolver
 		PackageInfo package = new()
 		{
 			Name = name,
-			Version = version,
+			Version = new Version( version ),
 			Parent = result
 		};
 
@@ -168,7 +196,7 @@ public static class PackageResolver
 		}
 
 		Log.Dbg( "Reading .nuspec package {PackageID}", package.Id );
-		package.NuspecDirPath = Path.Combine( package.Parent.PackagesPath, Utils.ToLower( package.Name ), Utils.ToLower( package.Version ) );
+		package.NuspecDirPath = Path.Combine( package.Parent.PackagesPath, Utils.ToLower( package.Name ), Utils.ToLower( package.Version.ToString() ) );
 
 		string nuspecFilePath = Path.Combine( package.NuspecDirPath, Utils.ToLower( package.Name ) + ".nuspec" );
 
@@ -354,7 +382,7 @@ public static class PackageResolver
 			int comparison = string.Compare( l.Name, r.Name, StringComparison.OrdinalIgnoreCase );
 			if( comparison == 0 )
 			{
-				comparison = string.Compare( l.Version, r.Version, StringComparison.OrdinalIgnoreCase );
+				comparison = l.Version.CompareTo( r.Version );
 			}
 
 			return comparison;
@@ -383,7 +411,7 @@ public static class PackageResolver
 				PackageInfo info = new()
 				{
 					Name = id,
-					Version = version,
+					Version = new Version( version ),
 					Parent = genResult
 				};
 

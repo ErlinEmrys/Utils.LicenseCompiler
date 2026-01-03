@@ -24,7 +24,7 @@ public class PackageInfo
 	/// <summary>
 	///    Version of the package
 	/// </summary>
-	public required string Version { get; set; }
+	public required Version Version { get; set; }
 
 	/// <summary>
 	///    Authors of the package
@@ -72,4 +72,18 @@ public class PackageInfo
 	/// </summary>
 	[ JsonIgnore ]
 	public required GeneratorResult Parent { get; set; }
+
+	/// <summary>
+	///    Alphabetical sorting
+	/// </summary>
+	public static int AlphaSort( PackageInfo l, PackageInfo r )
+	{
+		int compare = l.Name.CompareTo( r.Name, StringComparison.Ordinal );
+		if( compare == 0 )
+		{
+			compare = l.Version.CompareTo( r.Version );
+		}
+
+		return compare;
+	}
 }

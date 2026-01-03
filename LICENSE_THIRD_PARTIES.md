@@ -72,138 +72,6 @@ Third party licenses
 >>
 >
 
-> Microsoft.Build [18.0.2]
-> ------------------------
->
-> Homepage: <http://go.microsoft.com/fwlink/?LinkId=624683>
->
-> Authors: Microsoft
->
-> Copyright: © Microsoft Corporation. All rights reserved.
->
-> License:
->> [MIT](https://spdx.org/licenses/MIT.html)
->
-
-> Microsoft.Build.Framework [18.0.2]
-> ----------------------------------
->
-> Homepage: <http://go.microsoft.com/fwlink/?LinkId=624683>
->
-> Authors: Microsoft
->
-> Copyright: © Microsoft Corporation. All rights reserved.
->
-> License:
->> [MIT](https://spdx.org/licenses/MIT.html)
->
-
-> Microsoft.Extensions.Configuration.Abstractions [10.0.0]
-> --------------------------------------------------------
->
-> Homepage: <https://dot.net/>
->
-> Authors: Microsoft
->
-> Copyright: © Microsoft Corporation. All rights reserved.
->
-> License:
->> [MIT](https://spdx.org/licenses/MIT.html)
->
-
-> Microsoft.Extensions.DependencyInjection.Abstractions [10.0.0]
-> --------------------------------------------------------------
->
-> Homepage: <https://dot.net/>
->
-> Authors: Microsoft
->
-> Copyright: © Microsoft Corporation. All rights reserved.
->
-> License:
->> [MIT](https://spdx.org/licenses/MIT.html)
->
-
-> Microsoft.Extensions.DependencyInjection.Abstractions [10.0.0.0]
-> ----------------------------------------------------------------
->
->
-
-> Microsoft.Extensions.Diagnostics.Abstractions [10.0.0]
-> ------------------------------------------------------
->
-> Homepage: <https://dot.net/>
->
-> Authors: Microsoft
->
-> Copyright: © Microsoft Corporation. All rights reserved.
->
-> License:
->> [MIT](https://spdx.org/licenses/MIT.html)
->
-
-> Microsoft.Extensions.FileProviders.Abstractions [10.0.0]
-> --------------------------------------------------------
->
-> Homepage: <https://dot.net/>
->
-> Authors: Microsoft
->
-> Copyright: © Microsoft Corporation. All rights reserved.
->
-> License:
->> [MIT](https://spdx.org/licenses/MIT.html)
->
-
-> Microsoft.Extensions.Hosting.Abstractions [10.0.0]
-> --------------------------------------------------
->
-> Homepage: <https://dot.net/>
->
-> Authors: Microsoft
->
-> Copyright: © Microsoft Corporation. All rights reserved.
->
-> License:
->> [MIT](https://spdx.org/licenses/MIT.html)
->
-
-> Microsoft.Extensions.Logging.Abstractions [10.0.0]
-> --------------------------------------------------
->
-> Homepage: <https://dot.net/>
->
-> Authors: Microsoft
->
-> Copyright: © Microsoft Corporation. All rights reserved.
->
-> License:
->> [MIT](https://spdx.org/licenses/MIT.html)
->
-
-> Microsoft.Extensions.Logging.Abstractions [10.0.0.0]
-> ----------------------------------------------------
->
->
-
-> Microsoft.IO.Redist [6.1.0]
-> ---------------------------
->
->
-
-> Microsoft.NET.StringTools [18.0.2]
-> ----------------------------------
->
-> Homepage: <http://go.microsoft.com/fwlink/?LinkId=624683>
->
-> Authors: Microsoft
->
-> Copyright: © Microsoft Corporation. All rights reserved.
->
-> License:
->> [MIT](https://spdx.org/licenses/MIT.html)
->
-
 > Newtonsoft.Json [13.0.4]
 > ------------------------
 >
@@ -235,32 +103,6 @@ Third party licenses
 >> IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 >> CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 >>
->
-
-> Serilog [4.0.0]
-> ---------------
->
-> Homepage: <https://serilog.net/>
->
-> Authors: Serilog Contributors
->
-> Copyright: Copyright © 2013-24 Serilog Contributors
->
-> License:
->> [Apache-2.0](https://spdx.org/licenses/Apache-2.0.html)
->
-
-> Serilog [4.2.0]
-> ---------------
->
-> Homepage: <https://serilog.net/>
->
-> Authors: Serilog Contributors
->
-> Copyright: Copyright © Serilog Contributors
->
-> License:
->> [Apache-2.0](https://spdx.org/licenses/Apache-2.0.html)
 >
 
 > Serilog [4.3.0]
@@ -331,145 +173,7 @@ Third party licenses
 >> [Apache-2.0](https://spdx.org/licenses/Apache-2.0.html)
 >
 
-> System.Diagnostics.EventLog [9.0.0]
-> -----------------------------------
->
-> Homepage: <https://dot.net/>
->
-> Authors: Microsoft
->
-> Copyright: © Microsoft Corporation. All rights reserved.
->
-> License:
->> The MIT License (MIT)
->>
->> Copyright (c) .NET Foundation and Contributors
->>
->> All rights reserved.
->>
->> Permission is hereby granted, free of charge, to any person obtaining a copy
->> of this software and associated documentation files (the "Software"), to deal
->> in the Software without restriction, including without limitation the rights
->> to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
->> copies of the Software, and to permit persons to whom the Software is
->> furnished to do so, subject to the following conditions:
->>
->> The above copyright notice and this permission notice shall be included in all
->> copies or substantial portions of the Software.
->>
->> THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
->> IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
->> FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
->> AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
->> LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
->> OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
->> SOFTWARE.
->>
->
-
-> System.Diagnostics.EventLog [9.0.0.0]
-> -------------------------------------
->
->
-
-> System.Diagnostics.FileVersionInfo [10.0.0.0]
-> ---------------------------------------------
->
->
-
-> System.Diagnostics.TextWriterTraceListener [9.0.0.0]
-> ----------------------------------------------------
->
->
-
-> System.IO.Pipelines [10.0.0.0]
-> ------------------------------
->
->
-
-> System.Net.WebClient [9.0.0.0]
-> ------------------------------
->
->
-
-> System.Reflection.MetadataLoadContext [9.0.0]
-> ---------------------------------------------
->
-> Homepage: <https://dot.net/>
->
-> Authors: Microsoft
->
-> Copyright: © Microsoft Corporation. All rights reserved.
->
-> License:
->> The MIT License (MIT)
->>
->> Copyright (c) .NET Foundation and Contributors
->>
->> All rights reserved.
->>
->> Permission is hereby granted, free of charge, to any person obtaining a copy
->> of this software and associated documentation files (the "Software"), to deal
->> in the Software without restriction, including without limitation the rights
->> to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
->> copies of the Software, and to permit persons to whom the Software is
->> furnished to do so, subject to the following conditions:
->>
->> The above copyright notice and this permission notice shall be included in all
->> copies or substantial portions of the Software.
->>
->> THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
->> IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
->> FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
->> AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
->> LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
->> OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
->> SOFTWARE.
->>
->
-
-> System.Security.Cryptography.ProtectedData [9.0.0.0]
-> ----------------------------------------------------
->
->
-
-> System.Security.Cryptography.ProtectedData [9.0.6]
-> --------------------------------------------------
->
-> Homepage: <https://dot.net/>
->
-> Authors: Microsoft
->
-> Copyright: © Microsoft Corporation. All rights reserved.
->
-> License:
->> The MIT License (MIT)
->>
->> Copyright (c) .NET Foundation and Contributors
->>
->> All rights reserved.
->>
->> Permission is hereby granted, free of charge, to any person obtaining a copy
->> of this software and associated documentation files (the "Software"), to deal
->> in the Software without restriction, including without limitation the rights
->> to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
->> copies of the Software, and to permit persons to whom the Software is
->> furnished to do so, subject to the following conditions:
->>
->> The above copyright notice and this permission notice shall be included in all
->> copies or substantial portions of the Software.
->>
->> THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
->> IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
->> FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
->> AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
->> LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
->> OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
->> SOFTWARE.
->>
->
-
-> Microsoft .NET [10.*]
+> Microsoft .NET [10.0]
 > ---------------------
 >
 > Homepage: <https://dot.net>
@@ -479,68 +183,67 @@ Third party licenses
 > Copyright: © Microsoft Corporation. All rights reserved.
 >
 > Packages:
->> + Microsoft.Bcl.AsyncInterfaces@10.0.0
+>> + Microsoft.Build@18.0.2
+>> + Microsoft.Build.Framework@15.1.0.0
 >> + Microsoft.CSharp@4.3.0
+>> + Microsoft.Extensions.Configuration.Abstractions@10.0.0.0
 >> + Microsoft.Extensions.DependencyInjection@10.0.0.0
+>> + Microsoft.Extensions.DependencyInjection.Abstractions@10.0.0.0
+>> + Microsoft.Extensions.Diagnostics.Abstractions@10.0.0.0
+>> + Microsoft.Extensions.FileProviders.Abstractions@10.0.0.0
+>> + Microsoft.Extensions.Hosting.Abstractions@10.0.0
 >> + Microsoft.Extensions.Logging@10.0.0
->> + Microsoft.Extensions.Options@10.0.0
+>> + Microsoft.Extensions.Logging.Abstractions@10.0.0.0
 >> + Microsoft.Extensions.Options@10.0.0.0
->> + Microsoft.Extensions.Primitives@10.0.0
 >> + Microsoft.Extensions.Primitives@10.0.0.0
+>> + Microsoft.NET.StringTools@1.0.0.0
+>> + Microsoft.VisualStudio.SolutionPersistence@1.0.0.0
 >> + Microsoft.Win32.Primitives@10.0.0.0
 >> + Microsoft.Win32.Registry@10.0.0.0
 >> + NETStandard.Library@1.6.1
->> + System.Buffers@4.6.1
 >> + System.Collections@10.0.0.0
->> + System.Collections@9.0.0.0
 >> + System.Collections.Concurrent@10.0.0.0
 >> + System.Collections.Immutable@10.0.0.0
->> + System.Collections.Immutable@9.0.0
 >> + System.Collections.NonGeneric@10.0.0.0
->> + System.Collections.NonGeneric@9.0.0.0
 >> + System.Collections.Specialized@10.0.0.0
->> + System.Collections.Specialized@9.0.0.0
 >> + System.ComponentModel@10.0.0.0
->> + System.ComponentModel@9.0.0.0
 >> + System.ComponentModel.Annotations@10.0.0.0
+>> + System.ComponentModel.EventBasedAsync@10.0.0.0
 >> + System.ComponentModel.Primitives@10.0.0.0
->> + System.ComponentModel.Primitives@9.0.0.0
 >> + System.ComponentModel.TypeConverter@10.0.0.0
->> + System.ComponentModel.TypeConverter@4.3.0
->> + System.ComponentModel.TypeConverter@9.0.0.0
->> + System.Configuration.ConfigurationManager@9.0.0
->> + System.Diagnostics.DiagnosticSource@10.0.0
+>> + System.Configuration.ConfigurationManager@9.0.0.0
+>> + System.Console@10.0.0.0
 >> + System.Diagnostics.DiagnosticSource@10.0.0.0
->> + System.Diagnostics.DiagnosticSource@8.0.1
->> + System.Diagnostics.DiagnosticSource@9.0.0
->> + System.Diagnostics.Process@9.0.0.0
+>> + System.Diagnostics.EventLog@9.0.0.0
+>> + System.Diagnostics.FileVersionInfo@10.0.0.0
+>> + System.Diagnostics.Process@10.0.0.0
+>> + System.Diagnostics.StackTrace@10.0.0.0
+>> + System.Diagnostics.TextWriterTraceListener@9.0.0.0
 >> + System.Diagnostics.TraceSource@10.0.0.0
->> + System.Diagnostics.TraceSource@9.0.0.0
 >> + System.Diagnostics.Tracing@10.0.0.0
 >> + System.Drawing.Primitives@10.0.0.0
 >> + System.Formats.Asn1@10.0.0.0
 >> + System.IO.Compression@10.0.0.0
 >> + System.IO.Compression.Brotli@10.0.0.0
 >> + System.IO.MemoryMappedFiles@10.0.0.0
+>> + System.IO.Pipelines@10.0.0.0
+>> + System.IO.Pipes@10.0.0.0
 >> + System.Linq@10.0.0.0
 >> + System.Linq.Expressions@10.0.0.0
+>> + System.Linq.Parallel@10.0.0.0
 >> + System.Memory@10.0.0.0
->> + System.Memory@4.5.5
->> + System.Memory@4.6.0
->> + System.Memory@4.6.3
->> + System.Memory@9.0.0.0
 >> + System.Net.Http@10.0.0.0
 >> + System.Net.NameResolution@10.0.0.0
 >> + System.Net.NetworkInformation@10.0.0.0
 >> + System.Net.Primitives@10.0.0.0
->> + System.Net.Primitives@9.0.0.0
 >> + System.Net.Quic@10.0.0.0
+>> + System.Net.Requests@10.0.0.0
 >> + System.Net.Security@10.0.0.0
 >> + System.Net.Sockets@10.0.0.0
+>> + System.Net.WebClient@9.0.0.0
+>> + System.Net.WebHeaderCollection@10.0.0.0
 >> + System.Numerics.Vectors@10.0.0.0
->> + System.Numerics.Vectors@9.0.0.0
 >> + System.ObjectModel@10.0.0.0
->> + System.ObjectModel@9.0.0.0
 >> + System.Private.CoreLib@10.0.0.0
 >> + System.Private.Uri@10.0.0.0
 >> + System.Private.Xml@10.0.0.0
@@ -549,47 +252,36 @@ Third party licenses
 >> + System.Reflection.Emit.ILGeneration@10.0.0.0
 >> + System.Reflection.Emit.Lightweight@10.0.0.0
 >> + System.Reflection.Metadata@10.0.0.0
->> + System.Reflection.Metadata@9.0.0
+>> + System.Reflection.MetadataLoadContext@9.0.0.0
 >> + System.Reflection.Primitives@10.0.0.0
 >> + System.Resources.Writer@10.0.0.0
 >> + System.Runtime@10.0.0.0
->> + System.Runtime@9.0.0.0
->> + System.Runtime.CompilerServices.Unsafe@6.1.0
 >> + System.Runtime.InteropServices@10.0.0.0
->> + System.Runtime.InteropServices@9.0.0.0
 >> + System.Runtime.Intrinsics@10.0.0.0
 >> + System.Runtime.Loader@10.0.0.0
 >> + System.Runtime.Numerics@10.0.0.0
->> + System.Runtime.Serialization.Formatters@4.3.0
 >> + System.Runtime.Serialization.Formatters@8.1.0.0
 >> + System.Runtime.Serialization.Primitives@4.3.0
 >> + System.Security.AccessControl@10.0.0.0
 >> + System.Security.Claims@10.0.0.0
 >> + System.Security.Cryptography@10.0.0.0
->> + System.Security.Cryptography@9.0.0.0
+>> + System.Security.Cryptography.ProtectedData@9.0.0.0
 >> + System.Security.Principal.Windows@10.0.0.0
->> + System.Security.Principal.Windows@5.0.0
+>> + System.Text.Encoding.CodePages@10.0.0.0
 >> + System.Text.Encoding.Extensions@10.0.0.0
->> + System.Text.Encoding.Extensions@9.0.0.0
 >> + System.Text.Encodings.Web@10.0.0.0
->> + System.Text.Json@9.0.0
+>> + System.Text.Json@10.0.0.0
 >> + System.Text.RegularExpressions@10.0.0.0
->> + System.Text.RegularExpressions@9.0.0.0
 >> + System.Threading@10.0.0.0
->> + System.Threading@9.0.0.0
 >> + System.Threading.Channels@10.0.0.0
->> + System.Threading.Channels@8.0.0
 >> + System.Threading.Overlapped@10.0.0.0
->> + System.Threading.Tasks.Dataflow@9.0.0
->> + System.Threading.Tasks.Extensions@4.6.0
->> + System.Threading.Tasks.Extensions@4.6.3
+>> + System.Threading.Tasks.Dataflow@10.0.0.0
+>> + System.Threading.Tasks.Parallel@10.0.0.0
 >> + System.Threading.Thread@10.0.0.0
->> + System.Threading.Thread@9.0.0.0
 >> + System.Threading.ThreadPool@10.0.0.0
 >> + System.ValueTuple@4.5.0
->> + System.ValueTuple@4.6.1
+>> + System.Web.HttpUtility@10.0.0.0
 >> + System.Xml.ReaderWriter@10.0.0.0
->> + System.Xml.ReaderWriter@9.0.0.0
 >> + System.Xml.XDocument@10.0.0.0
 >> + System.Xml.XmlDocument@4.3.0
 >> + System.Xml.XmlSerializer@9.0.0.0
