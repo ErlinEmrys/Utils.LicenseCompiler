@@ -9,8 +9,6 @@ using Erlin.Lib.Common.Xml;
 
 using Microsoft.Build.Construction;
 
-using Newtonsoft.Json.Linq;
-
 using SimpleExec;
 
 namespace Erlin.Utils.LicenseCompiler;
@@ -24,78 +22,45 @@ public static class PackageResolver
 	private const string CMD_ARGS_PATH = "nuget locals -l global-packages --force-english-output";
 
 	private static readonly HashSet< string > _idSet = [ ];
-	private static readonly TaskWorker< PackageInfo > _worker = new( "Package_Info_Reader", PackageResolver.ProcessPackage, 32 );
+	private static readonly TaskWorker< PackageInfo > _packageWorker = new( "Package_Info_Reader", PackageResolver.WorkerProcessPackage, 32 );
 
 	/// <summary>
 	///    *.nuspec file serializer
 	/// </summary>
-	public static XmlSerializer NuspecSerializer { get; } = new( typeof( NuspecPackage ) );
+	private static XmlSerializer NuspecSerializer { get; } = new( typeof( NuspecPackage ) );
 
 	/// <summary>
 	///    Resolves all packages of the project
 	/// </summary>
-	public static async Task< GeneratorResult > ResolvePackages( ProgramArgs args )
+	public static async Task< CompilerResult > ResolvePackages( ProgramArgs args )
 	{
 		// Retrieve physical path to packages
 		string packagesPath = await PackageResolver.ResolvePackagesPath();
-		GeneratorResult result = new() { PackagesPath = packagesPath };
+		CompilerResult result = new() { PackagesPath = packagesPath };
 
+		// Read packages from soolution
 		PackageResolver.ReadSolution( args, result );
 
-		await _worker.WaitToFinish();
+		// Wait until all packages are processed
+		await _packageWorker.WaitToFinish();
 
+		// Sort pacakges
 		result.Packages.Sort( PackageInfo.AlphaSort );
 		result.MicrosoftPackages.Sort( PackageInfo.AlphaSort );
 
+		// Remove duplicates
 		PackageResolver.FilterOutDuplicates( result );
 
+		// Proces Microsoft packages differently, becouse of the .NET Framework
 		MicrosoftLicences.ProcessMicrosoftPackages( result );
 
 		return result;
 	}
 
-	private static void FilterOutDuplicates( GeneratorResult result )
-	{
-		PackageResolver.FilterOutDuplicates( result.Packages );
-		PackageResolver.FilterOutDuplicates( result.MicrosoftPackages );
-	}
-
-	private static void FilterOutDuplicates( List< PackageInfo > list )
-	{
-		for( int i = 0; i < list.Count; )
-		{
-			PackageInfo first = list[ i ];
-			bool firstStays = true;
-			for( int j = i + 1; j < list.Count; )
-			{
-				PackageInfo second = list[ j ];
-				if( first.Name.EqualsTo( second.Name ) )
-				{
-					if( first.Version > second.Version )
-					{
-						list.RemoveAt( j );
-					}
-					else
-					{
-						list.RemoveAt( i );
-						firstStays = false;
-						break;
-					}
-				}
-				else
-				{
-					j++;
-				}
-			}
-
-			if( firstStays )
-			{
-				i++;
-			}
-		}
-	}
-
-	private static void ReadSolution( ProgramArgs args, GeneratorResult result )
+	/// <summary>
+	///    Read the solution for packages that are being referenced
+	/// </summary>
+	private static void ReadSolution( ProgramArgs args, CompilerResult result )
 	{
 		const string CS_PROJECT_EXTENSION = ".csproj";
 		const string ITEM_NAME_PACKAGE_REFERENCE = "PackageReference";
@@ -134,7 +99,10 @@ public static class PackageResolver
 		}
 	}
 
-	private static void RegisterPackage( GeneratorResult result, string name, string version )
+	/// <summary>
+	///    Register package for processing
+	/// </summary>
+	private static void RegisterPackage( CompilerResult result, string name, string version )
 	{
 		PackageInfo package = new()
 		{
@@ -148,13 +116,16 @@ public static class PackageResolver
 			if( _idSet.Add( package.Id ) )
 			{
 				Log.Inf( "Package reference found: {PackageID}", package.Id );
-				_worker.Enqueue( package );
+				_packageWorker.Enqueue( package );
 				result.AddPackage( package );
 			}
 		}
 	}
 
-	private static Task ProcessPackage( PackageInfo package, CancellationToken token = default )
+	/// <summary>
+	///    Process package from the worker
+	/// </summary>
+	private static Task WorkerProcessPackage( PackageInfo package, CancellationToken token = default )
 	{
 		PackageResolver.ReadNuspecFile( package );
 		return Task.CompletedTask;
@@ -214,6 +185,9 @@ public static class PackageResolver
 		}
 	}
 
+	/// <summary>
+	///    Processing of Microsoft package
+	/// </summary>
 	private static void ProcessMicrosoftPackage( PackageInfo package )
 	{
 		Log.Dbg( "Microsoft package found {PackageID}", package.Id );
@@ -222,10 +196,18 @@ public static class PackageResolver
 		Assembly? a = null;
 		try
 		{
-			a = Assembly.Load( package.Name ); // + ", Version=" + package.Version + ", Culture=neutral, PublicKeyToken=" );
+			a = Assembly.Load( package.Name + ", Version=" + package.Version + ", Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" );
 		}
 		catch( Exception ex ) when( ex is FileNotFoundException or FileLoadException )
 		{
+			try
+			{
+				a = Assembly.Load( package.Name );
+			}
+			catch( Exception )
+			{
+				Log.Wrn( "Unable to open assembly: {Assembly}", package.Id );
+			}
 		}
 
 		if( a is not null )
@@ -255,7 +237,7 @@ public static class PackageResolver
 	/// <summary>
 	///    Reads info from *.nuspec package metadata
 	/// </summary>
-	public static void FillInfo( NuspecMetadata nuget, PackageInfo info )
+	private static void FillInfo( NuspecMetadata nuget, PackageInfo info )
 	{
 		if( nuget.DependencyGroups?.Length > 0 )
 		{
@@ -351,76 +333,6 @@ public static class PackageResolver
 	}
 
 	/// <summary>
-	///    Reads basic packages info from JSON list
-	/// </summary>
-	private static void ConvertPackagesJson( GeneratorResult result, JObject json )
-	{
-		if( json[ "projects" ] is not JArray projects )
-		{
-			throw new UnexpectedResultException( "Packages JSON: Missing 'projects' array" );
-		}
-
-		Dictionary< string, PackageInfo > tempDic = new();
-		foreach( JToken fProject in projects )
-		{
-			if( fProject[ "frameworks" ] is not JArray frameworks )
-			{
-				throw new UnexpectedResultException( "Packages JSON: Missing 'frameworks' array" );
-			}
-
-			foreach( JToken fFramework in frameworks )
-			{
-				JArray? topLevelPackages = fFramework.SelectToken( "topLevelPackages" ) as JArray;
-
-				PackageResolver.PackageArrToInfo( result, tempDic, topLevelPackages );
-			}
-		}
-
-		List< PackageInfo > list = tempDic.Values.ToList();
-		list.Sort( ( l, r ) =>
-		{
-			int comparison = string.Compare( l.Name, r.Name, StringComparison.OrdinalIgnoreCase );
-			if( comparison == 0 )
-			{
-				comparison = l.Version.CompareTo( r.Version );
-			}
-
-			return comparison;
-		} );
-
-		result.AddPackages( list );
-	}
-
-	/// <summary>
-	///    Reads basic packages info from JSON list
-	/// </summary>
-	private static void PackageArrToInfo( GeneratorResult genResult, Dictionary< string, PackageInfo > result, JArray? array )
-	{
-		if( array != null )
-		{
-			foreach( JToken fPackage in array )
-			{
-				string? id = fPackage[ "id" ]?.Value< string >();
-				string? version = fPackage[ "resolvedVersion" ]?.Value< string >();
-
-				if( id.IsEmpty() || version.IsEmpty() )
-				{
-					throw new UnexpectedResultException( $"Packages JSON: Package missing 'id' or 'version': {fPackage}" );
-				}
-
-				PackageInfo info = new()
-				{
-					Name = id,
-					Version = new Version( version ),
-					Parent = genResult
-				};
-
-				result.TryAdd( info.Id, info );
-			}
-		}
-	}
-
-	/// <summary>
 	///    Executes shell command
 	/// </summary>
 	/// <param name="cmd">Command to execute</param>
@@ -442,5 +354,52 @@ public static class PackageResolver
 		}
 
 		return cmdOutput;
+	}
+
+	/// <summary>
+	///    Remove duplicates from result object
+	/// </summary>
+	private static void FilterOutDuplicates( CompilerResult result )
+	{
+		PackageResolver.FilterOutDuplicates( result.Packages );
+		PackageResolver.FilterOutDuplicates( result.MicrosoftPackages );
+	}
+
+	/// <summary>
+	///    Remove duplicates from list of packages
+	/// </summary>
+	private static void FilterOutDuplicates( List< PackageInfo > list )
+	{
+		for( int i = 0; i < list.Count; )
+		{
+			PackageInfo first = list[ i ];
+			bool firstStays = true;
+			for( int j = i + 1; j < list.Count; )
+			{
+				PackageInfo second = list[ j ];
+				if( first.Name.EqualsTo( second.Name ) )
+				{
+					if( first.Version > second.Version )
+					{
+						list.RemoveAt( j );
+					}
+					else
+					{
+						list.RemoveAt( i );
+						firstStays = false;
+						break;
+					}
+				}
+				else
+				{
+					j++;
+				}
+			}
+
+			if( firstStays )
+			{
+				i++;
+			}
+		}
 	}
 }

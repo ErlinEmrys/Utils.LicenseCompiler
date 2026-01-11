@@ -1,26 +1,38 @@
 namespace Erlin.Utils.LicenseCompiler;
 
+/// <summary>
+///    Helper class to dealt with Microsoft .NET packgaes as they are usually excluded from dependency informations
+/// </summary>
 public static class MicrosoftLicences
 {
-	private static HashSet< string > Packages { get; } =
+	/// <summary>
+	///    Prefixes of Microsoft .NET packages
+	/// </summary>
+	private static HashSet< string > PackagePrefixes { get; } =
 	[
-		"NETSTANDARD.LIBRARY",
+		"NETSTANDARD.",
 		"MICROSOFT.",
-		"SYSTEM.",
+		"SYSTEM."
 	];
 
+	/// <summary>
+	///    Check if package name hints, that it is from Microsoft
+	/// </summary>
 	public static bool IsMicrosoftPackage( string packageName )
 	{
 		if( packageName.IsNotEmpty() )
 		{
 			packageName = packageName.ToUpperInvariant();
-			return MicrosoftLicences.Packages.Any( p => packageName.StartsWith( p, StringComparison.InvariantCulture ) );
+			return MicrosoftLicences.PackagePrefixes.Any( p => packageName.StartsWith( p, StringComparison.InvariantCulture ) );
 		}
 
 		return false;
 	}
 
-	public static void ProcessMicrosoftPackages( GeneratorResult result )
+	/// <summary>
+	///    Processes all Microsoft packages
+	/// </summary>
+	public static void ProcessMicrosoftPackages( CompilerResult result )
 	{
 		if( result.MicrosoftPackages.Count > 0 )
 		{
@@ -42,6 +54,10 @@ public static class MicrosoftLicences
 		}
 	}
 
+	/// <summary>
+	///    .NET License
+	///    https://github.com/dotnet/runtime/blob/main/LICENSE.TXT
+	/// </summary>
 	private static string GetLicense()
 	{
 		return """
@@ -71,6 +87,10 @@ public static class MicrosoftLicences
 				""";
 	}
 
+	/// <summary>
+	///    .NET Third parties notice
+	///    https://github.com/dotnet/runtime/blob/main/THIRD-PARTY-NOTICES.TXT
+	/// </summary>
 	private static string GetNotice()
 	{
 		return """

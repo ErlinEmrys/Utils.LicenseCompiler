@@ -1,3 +1,5 @@
+using System.Diagnostics;
+
 using Newtonsoft.Json;
 
 namespace Erlin.Utils.LicenseCompiler;
@@ -5,6 +7,7 @@ namespace Erlin.Utils.LicenseCompiler;
 /// <summary>
 ///    Information about package
 /// </summary>
+[ DebuggerDisplay( "{Id}" ) ]
 public class PackageInfo
 {
 	/// <summary>
@@ -71,10 +74,10 @@ public class PackageInfo
 	///    Parent result object
 	/// </summary>
 	[ JsonIgnore ]
-	public required GeneratorResult Parent { get; set; }
+	public required CompilerResult Parent { get; set; }
 
 	/// <summary>
-	///    Alphabetical sorting
+	///    Alphabetical sorting for this packages
 	/// </summary>
 	public static int AlphaSort( PackageInfo l, PackageInfo r )
 	{

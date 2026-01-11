@@ -174,6 +174,9 @@ public static class Program
 		}
 	}
 
+	/// <summary>
+	///    Logging configuration
+	/// </summary>
 	private static LoggerConfiguration ConfigureLogging( LoggerConfiguration logConfig, LoggingLevelSwitch logLevelSwitch, bool enableFileLog )
 	{
 		logConfig = logConfig.MinimumLevel.ControlledBy( logLevelSwitch )
@@ -188,6 +191,9 @@ public static class Program
 		return logConfig;
 	}
 
+	/// <summary>
+	///    Enables logging to file
+	/// </summary>
 	private static void EnableFileLog( ReloadableLogger logger, LoggingLevelSwitch logLevelSwitch )
 	{
 		try
@@ -203,11 +209,11 @@ public static class Program
 	}
 
 	/// <summary>
-	///    Application
+	///    Main Application
 	/// </summary>
 	private static async Task< int > RunApp( ProgramArgs args )
 	{
-		GeneratorResult result = await PackageResolver.ResolvePackages( args );
+		CompilerResult result = await PackageResolver.ResolvePackages( args );
 
 		await OutputWriter.WriteOutputMD( args, result );
 

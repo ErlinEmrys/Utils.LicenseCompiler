@@ -1,9 +1,9 @@
 namespace Erlin.Utils.LicenseCompiler;
 
 /// <summary>
-///    Result of the license generator
+///    Result of the license compiler
 /// </summary>
-public class GeneratorResult
+public class CompilerResult
 {
 	/// <summary>
 	///    Path to packages cache
@@ -21,17 +21,6 @@ public class GeneratorResult
 	public List< PackageInfo > MicrosoftPackages { get; } = [ ];
 
 	/// <summary>
-	///    Adds packages to this result object
-	/// </summary>
-	public void AddPackages( List< PackageInfo > list )
-	{
-		foreach( PackageInfo fPackage in list )
-		{
-			AddPackage( fPackage );
-		}
-	}
-
-	/// <summary>
 	///    Adds package to this result object
 	/// </summary>
 	public void AddPackage( PackageInfo package )
@@ -40,6 +29,9 @@ public class GeneratorResult
 		Packages.Add( package );
 	}
 
+	/// <summary>
+	///    Add packages from Microsoft to this result object
+	/// </summary>
 	public void AddMicrosoftPackage( PackageInfo package )
 	{
 		Packages.Remove( package );

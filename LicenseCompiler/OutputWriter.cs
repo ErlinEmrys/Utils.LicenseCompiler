@@ -15,7 +15,7 @@ public static class OutputWriter
 	/// <summary>
 	///    Writes output to JSON file
 	/// </summary>
-	public static async Task WriteOutputJson( ProgramArgs args, GeneratorResult result )
+	public static async Task WriteOutputJson( ProgramArgs args, CompilerResult result )
 	{
 		if( args.OutputJsonPath.IsEmpty() )
 		{
@@ -44,7 +44,7 @@ public static class OutputWriter
 	/// <summary>
 	///    Writes output to MD file
 	/// </summary>
-	public static async Task WriteOutputMD( ProgramArgs args, GeneratorResult result )
+	public static async Task WriteOutputMD( ProgramArgs args, CompilerResult result )
 	{
 		if( args.OutputMDPath.IsEmpty() )
 		{
@@ -85,7 +85,7 @@ public static class OutputWriter
 				await stream.WriteLineAsync( "Packages:", 1 );
 				foreach( string fRelatedPackage in fPackage.RelatedPacakges )
 				{
-					await stream.WriteUnorderedListAsync( fRelatedPackage, 2 );
+					await stream.WriteUnorderedListItemAsync( fRelatedPackage, 2 );
 				}
 
 				await stream.WriteLineAsync( null, 1 );
@@ -164,9 +164,9 @@ public static class OutputWriter
 	}
 
 	/// <summary>
-	///    Writes unordered list to MD
+	///    Writes unordered list item to MD
 	/// </summary>
-	private static async Task WriteUnorderedListAsync( this TextWriter stream, string? text, int indentation )
+	private static async Task WriteUnorderedListItemAsync( this TextWriter stream, string? text, int indentation )
 	{
 		if( text.IsNotEmpty() )
 		{

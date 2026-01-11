@@ -70,6 +70,9 @@ public class NuspecRepository
 	public string? Url { get; set; }
 }
 
+/// <summary>
+///    XML *.nuspec package dependency group representation
+/// </summary>
 public class NuspecDependencyGroup
 {
 	[ XmlAttribute( AttributeName = "targetFramework" ) ]
@@ -79,6 +82,9 @@ public class NuspecDependencyGroup
 	public NuspecDependency[]? Dependencies { get; set; } = [ ];
 }
 
+/// <summary>
+///    XML *.nuspec package dependency item representation
+/// </summary>
 public class NuspecDependency
 {
 	[ XmlAttribute( AttributeName = "id" ) ]
