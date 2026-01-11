@@ -22,6 +22,12 @@ public class ProgramArgs
 	}
 
 	/// <summary>
+	///    Information about resolved references
+	/// </summary>
+	[ Option( 'r', HelpText = "Information about resolved references " ) ]
+	public string? ResolvedReferences { get; set; }
+
+	/// <summary>
 	///    Path for output JSON file
 	/// </summary>
 	[ Option( "oj", HelpText = "Path to output json file" ) ]

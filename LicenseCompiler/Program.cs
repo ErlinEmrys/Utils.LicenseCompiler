@@ -93,6 +93,8 @@ public static class Program
 			{
 				try
 				{
+					Log.Dbg( "Resolved references: {RefData}", a.ResolvedReferences );
+
 					if( a.SolutionFilePath.IsEmpty() )
 					{
 						string path = Path.GetFullPath( Path.Combine( Directory.GetCurrentDirectory(), @"..\..\..\" ) );

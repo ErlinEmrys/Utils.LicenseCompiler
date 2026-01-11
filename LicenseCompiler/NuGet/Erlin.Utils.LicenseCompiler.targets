@@ -4,9 +4,13 @@
 	</PropertyGroup>
 
 	<Target Name="AfterResolveReferences">
-		<Message Text="Erlin.Utils.LicenseCompiler: Generating licenses for solution: $(SolutionPath); Arguments: $(LicenseCompilerArgs)" Importance="high"/>
-		<ExecAsync Condition="!$(LicenseCompilerArgs.Contains('--sync'))" FilePath="dotnet" Arguments="$(LicenseCompiler) --s $(SolutionPath) $(LicenseCompilerArgs)"/>
-		<ExecSync Condition="$(LicenseCompilerArgs.Contains('--sync'))" FilePath="dotnet" Arguments="$(LicenseCompiler) --s $(SolutionPath) $(LicenseCompilerArgs)"/>
+		<PropertyGroup>
+			<RefData>@(ReferencePath->'&quot;%(Identity)|%(Version)|%(FusionName)|%(ResolvedFrom)|%(NuGetPackageId)&quot;', '#')</RefData>
+		</PropertyGroup>
+
+		<Message Text="Erlin.Utils.LicenseCompiler: Generating licenses for solution: $(SolutionPath); Arguments: $(LicenseCompilerArgs) References: $(RefData)" Importance="high"/>
+		<ExecAsync Condition="!$(LicenseCompilerArgs.Contains('--sync'))" FilePath="dotnet" Arguments="$(LicenseCompiler) --s $(SolutionPath) --r $(RefData) $(LicenseCompilerArgs)"/>
+		<ExecSync Condition="$(LicenseCompilerArgs.Contains('--sync'))" FilePath="dotnet" Arguments="$(LicenseCompiler) --s $(SolutionPath) --r $(RefData) $(LicenseCompilerArgs)"/>
 	</Target>
 
 	<!--Parallel Task-->
