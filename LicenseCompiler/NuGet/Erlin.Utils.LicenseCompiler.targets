@@ -4,9 +4,9 @@
 	</PropertyGroup>
 
 	<Target Name="AfterResolveReferences">
-		<Message Text="Erlin.Utils.LicenseCompiler: Generating licenses for solution: $(SolutionDir); Arguments: $(LicenseCompilerArgs)" Importance="high"/>
-		<ExecAsync Condition="!$(LicenseCompilerArgs.Contains('--sync'))" FilePath="dotnet" Arguments="$(LicenseCompiler) --s $(SolutionDir) $(LicenseCompilerArgs)"/>
-		<ExecSync Condition="$(LicenseCompilerArgs.Contains('--sync'))" FilePath="dotnet" Arguments="$(LicenseCompiler) --s $(SolutionDir) $(LicenseCompilerArgs)"/>
+		<Message Text="Erlin.Utils.LicenseCompiler: Generating licenses for solution: $(SolutionPath); Arguments: $(LicenseCompilerArgs)" Importance="high"/>
+		<ExecAsync Condition="!$(LicenseCompilerArgs.Contains('--sync'))" FilePath="dotnet" Arguments="$(LicenseCompiler) --s $(SolutionPath) $(LicenseCompilerArgs)"/>
+		<ExecSync Condition="$(LicenseCompilerArgs.Contains('--sync'))" FilePath="dotnet" Arguments="$(LicenseCompiler) --s $(SolutionPath) $(LicenseCompilerArgs)"/>
 	</Target>
 
 	<!--Parallel Task-->
