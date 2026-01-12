@@ -30,6 +30,11 @@ public class PackageInfo
 	public required Version Version { get; set; }
 
 	/// <summary>
+	///    Path to the assembly file of the package
+	/// </summary>
+	public required string AssemblyFilePath { get; set; }
+
+	/// <summary>
 	///    Authors of the package
 	/// </summary>
 	public string? Authors { get; set; }
@@ -74,7 +79,7 @@ public class PackageInfo
 	///    Parent result object
 	/// </summary>
 	[ JsonIgnore ]
-	public required CompilerResult Parent { get; set; }
+	public required PackagesResult Parent { get; set; }
 
 	/// <summary>
 	///    Alphabetical sorting for this packages

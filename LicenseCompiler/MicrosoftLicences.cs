@@ -32,7 +32,7 @@ public static class MicrosoftLicences
 	/// <summary>
 	///    Processes all Microsoft packages
 	/// </summary>
-	public static void ProcessMicrosoftPackages( CompilerResult result )
+	public static void ProcessMicrosoftPackages( PackagesResult result )
 	{
 		if( result.MicrosoftPackages.Count > 0 )
 		{
@@ -40,6 +40,7 @@ public static class MicrosoftLicences
 			{
 				Name = "Microsoft .NET",
 				Version = new Version( 10, 0 ),
+				AssemblyFilePath = ".NET",
 				Parent = result,
 				Authors = "Microsoft",
 				Copyright = "© Microsoft Corporation. All rights reserved.",

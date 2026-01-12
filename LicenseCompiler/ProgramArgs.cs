@@ -8,24 +8,10 @@ namespace Erlin.Utils.LicenseCompiler;
 public class ProgramArgs
 {
 	/// <summary>
-	///    Path to solution file for which will be licenses generated
+	///    Path to the reference response file, containing list of all references
 	/// </summary>
-	[ Option( 's', HelpText = "Path to the solution file" ) ]
-	public required string SolutionFilePath { get; set; }
-
-	/// <summary>
-	///    Path to soultion folder
-	/// </summary>
-	public string SolutionPath
-	{
-		get { return Path.GetDirectoryName( SolutionFilePath ) ?? throw new InvalidOperationException( "Solution path is not set" ); }
-	}
-
-	/// <summary>
-	///    Information about resolved references
-	/// </summary>
-	[ Option( 'r', HelpText = "Information about resolved references " ) ]
-	public string? ResolvedReferences { get; set; }
+	[ Option( 'r', HelpText = "Path to the reference response file, containing list of all references" ) ]
+	public required string RefFilePath { get; set; }
 
 	/// <summary>
 	///    Path for output JSON file

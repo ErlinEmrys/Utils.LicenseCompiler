@@ -41,10 +41,6 @@ public class NuspecMetadata
 
 	[ XmlElement( ElementName = "repository" ) ]
 	public NuspecRepository? Repository { get; set; }
-
-	[ XmlArray( "dependencies" ) ]
-	[ XmlArrayItem( "group" ) ]
-	public NuspecDependencyGroup[]? DependencyGroups { get; set; } = [ ];
 }
 
 /// <summary>
@@ -68,28 +64,4 @@ public class NuspecRepository
 {
 	[ XmlAttribute( AttributeName = "url" ) ]
 	public string? Url { get; set; }
-}
-
-/// <summary>
-///    XML *.nuspec package dependency group representation
-/// </summary>
-public class NuspecDependencyGroup
-{
-	[ XmlAttribute( AttributeName = "targetFramework" ) ]
-	public string? TargetFramework { get; set; }
-
-	[ XmlElement( "dependency" ) ]
-	public NuspecDependency[]? Dependencies { get; set; } = [ ];
-}
-
-/// <summary>
-///    XML *.nuspec package dependency item representation
-/// </summary>
-public class NuspecDependency
-{
-	[ XmlAttribute( AttributeName = "id" ) ]
-	public string? Id { get; set; }
-
-	[ XmlAttribute( AttributeName = "version" ) ]
-	public string? Version { get; set; }
 }

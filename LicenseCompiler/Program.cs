@@ -85,27 +85,16 @@ public static class Program
 		Log.Dbg( "APP START" );
 
 		bool appRunning = false;
-
 		try
 		{
+			using CancellationTokenSource cancelTokenSource = new();
+			Console.CancelKeyPress += Program.ConsoleOnCancelKeyPress( cancelTokenSource );
+
 			ParserResult< ProgramArgs > parsedArgs = Parser.Default.ParseArguments< ProgramArgs >( args );
 			return await parsedArgs.MapResult( a =>
 			{
 				try
 				{
-					Log.Dbg( "Resolved references: {RefData}", a.ResolvedReferences );
-
-					if( a.SolutionFilePath.IsEmpty() )
-					{
-						string path = Path.GetFullPath( Path.Combine( Directory.GetCurrentDirectory(), @"..\..\..\" ) );
-
-						string? sln = Directory.GetFiles( path, "*.sln", SearchOption.TopDirectoryOnly ).FirstOrDefault();
-
-						a.SolutionFilePath = sln;
-					}
-
-					Directory.SetCurrentDirectory( a.SolutionPath );
-
 					if( a.LogVerbose )
 					{
 						logLevelSwitch.MinimumLevel = LogEventLevel.Verbose;
@@ -122,7 +111,7 @@ public static class Program
 					}
 
 					appRunning = true;
-					return Program.RunApp( a );
+					return Program.RunApp( a, cancelTokenSource.Token );
 				}
 				catch( Exception err )
 				{
@@ -176,6 +165,16 @@ public static class Program
 		}
 	}
 
+	private static ConsoleCancelEventHandler ConsoleOnCancelKeyPress( CancellationTokenSource cancelTokenSource )
+	{
+		return ( _, eventArgs ) =>
+		{
+			Log.Inf( "Console -> Cancel key pressed!" );
+			cancelTokenSource.Cancel();
+			eventArgs.Cancel = true;
+		};
+	}
+
 	/// <summary>
 	///    Logging configuration
 	/// </summary>
@@ -213,9 +212,9 @@ public static class Program
 	/// <summary>
 	///    Main Application
 	/// </summary>
-	private static async Task< int > RunApp( ProgramArgs args )
+	private static async Task< int > RunApp( ProgramArgs args, CancellationToken cancelToken )
 	{
-		CompilerResult result = await PackageResolver.ResolvePackages( args );
+		PackagesResult result = await PackageResolver.ResolvePackages( args, cancelToken );
 
 		await OutputWriter.WriteOutputMD( args, result );
 

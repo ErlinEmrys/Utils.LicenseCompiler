@@ -15,18 +15,17 @@ public static class OutputWriter
 	/// <summary>
 	///    Writes output to JSON file
 	/// </summary>
-	public static async Task WriteOutputJson( ProgramArgs args, CompilerResult result )
+	public static async Task WriteOutputJson( ProgramArgs args, PackagesResult result )
 	{
 		if( args.OutputJsonPath.IsEmpty() )
 		{
 			return;
 		}
 
-		string filePath = Path.Combine( args.SolutionPath, args.OutputJsonPath );
+		Log.Inf( "Writing output JSON file {FilePath}", args.OutputJsonPath );
+		FileSystemHelper.DirectoryEnsure( args.OutputJsonPath );
 
-		Log.Inf( "Writing output JSON file {FilePath}", filePath );
-
-		await using StreamWriter stream = new( filePath );
+		await using StreamWriter stream = new( args.OutputJsonPath );
 		await using JsonTextWriter writer = new( stream );
 
 		if( args.OutputJsonIndented )
@@ -44,18 +43,17 @@ public static class OutputWriter
 	/// <summary>
 	///    Writes output to MD file
 	/// </summary>
-	public static async Task WriteOutputMD( ProgramArgs args, CompilerResult result )
+	public static async Task WriteOutputMD( ProgramArgs args, PackagesResult result )
 	{
 		if( args.OutputMDPath.IsEmpty() )
 		{
 			return;
 		}
 
-		string filePath = Path.Combine( args.SolutionPath, args.OutputMDPath );
+		Log.Inf( "Writing output MD file {FilePath}", args.OutputMDPath );
+		FileSystemHelper.DirectoryEnsure( args.OutputMDPath );
 
-		Log.Inf( "Writing output MD file {FilePath}", filePath );
-
-		await using StreamWriter stream = new( filePath );
+		await using StreamWriter stream = new( args.OutputMDPath );
 
 		await stream.WriteHeader( "Third party licenses", MD_HEADER_FIRST_SEPARATOR );
 		await stream.WriteParagraph( "*This software stands on the shoulders of the following giants:*" );

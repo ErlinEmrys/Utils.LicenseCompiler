@@ -5,12 +5,16 @@
 
 	<Target Name="AfterResolveReferences">
 		<PropertyGroup>
-			<RefData>@(ReferencePath->'&quot;%(Identity)|%(Version)|%(FusionName)|%(ResolvedFrom)|%(NuGetPackageId)&quot;', '#')</RefData>
+			<!-- Define a path for the temporary response file -->
+			<RefRespFile>$(IntermediateOutputPath)LicenseCompiler.references.rsp</RefRespFile>
 		</PropertyGroup>
 
-		<Message Text="Erlin.Utils.LicenseCompiler: Generating licenses for solution: $(SolutionPath); Arguments: $(LicenseCompilerArgs) References: $(RefData)" Importance="high"/>
-		<ExecAsync Condition="!$(LicenseCompilerArgs.Contains('--sync'))" FilePath="dotnet" Arguments="$(LicenseCompiler) --s $(SolutionPath) --r $(RefData) $(LicenseCompilerArgs)"/>
-		<ExecSync Condition="$(LicenseCompilerArgs.Contains('--sync'))" FilePath="dotnet" Arguments="$(LicenseCompiler) --s $(SolutionPath) --r $(RefData) $(LicenseCompilerArgs)"/>
+		<!-- Write the formatted reference data to the file, one per line -->
+		<WriteLinesToFile File="$(RefRespFile)" Lines="@(ReferencePath->%(FusionName)|%(NuGetPackageId)|%(Identity)|%(FullPath)|%(FullPath))" Overwrite="true"/>
+
+		<Message Text="Erlin.Utils.LicenseCompiler: Generating licenses for solution: $(SolutionPath); Arguments: $(LicenseCompilerArgs) References file: $(RefRespFile)" Importance="high"/>
+		<ExecAsync Condition="!$(LicenseCompilerArgs.Contains('--sync'))" FilePath="dotnet" Arguments="$(LicenseCompiler) --r $(RefRespFile) $(LicenseCompilerArgs)"/>
+		<ExecSync Condition="$(LicenseCompilerArgs.Contains('--sync'))" FilePath="dotnet" Arguments="$(LicenseCompiler) --r $(RefRespFile) $(LicenseCompilerArgs)"/>
 	</Target>
 
 	<!--Parallel Task-->

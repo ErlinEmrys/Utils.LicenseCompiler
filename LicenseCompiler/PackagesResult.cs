@@ -1,22 +1,17 @@
 namespace Erlin.Utils.LicenseCompiler;
 
 /// <summary>
-///    Result of the license compiler
+///    Result of the packages resolver
 /// </summary>
-public class CompilerResult
+public class PackagesResult
 {
-	/// <summary>
-	///    Path to packages cache
-	/// </summary>
-	public required string PackagesPath { get; set; }
-
 	/// <summary>
 	///    List of packages that project depends upon
 	/// </summary>
 	public List< PackageInfo > Packages { get; } = [ ];
 
 	/// <summary>
-	///    List of Microsoft packages
+	///    List of Microsoft packages that project depends upon
 	/// </summary>
 	public List< PackageInfo > MicrosoftPackages { get; } = [ ];
 
@@ -34,7 +29,7 @@ public class CompilerResult
 	/// </summary>
 	public void AddMicrosoftPackage( PackageInfo package )
 	{
-		Packages.Remove( package );
+		package.Parent = this;
 		MicrosoftPackages.Add( package );
 	}
 }
