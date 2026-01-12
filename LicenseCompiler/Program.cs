@@ -95,6 +95,8 @@ public static class Program
 			{
 				try
 				{
+					Directory.SetCurrentDirectory( a.SolutionPath );
+
 					if( a.LogVerbose )
 					{
 						logLevelSwitch.MinimumLevel = LogEventLevel.Verbose;

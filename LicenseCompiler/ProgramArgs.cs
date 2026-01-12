@@ -8,6 +8,12 @@ namespace Erlin.Utils.LicenseCompiler;
 public class ProgramArgs
 {
 	/// <summary>
+	///    Path to soultion folder
+	/// </summary>
+	[ Option( 's', HelpText = "Path to the solution folder" ) ]
+	public required string SolutionPath { get; set; }
+
+	/// <summary>
 	///    Path to the reference response file, containing list of all references
 	/// </summary>
 	[ Option( 'r', HelpText = "Path to the reference response file, containing list of all references" ) ]
