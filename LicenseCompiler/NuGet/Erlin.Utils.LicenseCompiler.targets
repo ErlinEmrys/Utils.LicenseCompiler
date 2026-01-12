@@ -12,7 +12,7 @@
 		<Message Text="Erlin.Utils.LicenseCompiler: Generating licenses for solution: $(SolutionDir); Arguments: $(LicenseCompilerArgs); References file: $(RefRespFile)" Importance="high"/>
 
 		<!-- Write the formatted reference data to the file, one per line -->
-		<WriteLinesToFile File="$(RefRespFile)" Lines="@(ReferencePath->'%(FusionName)|%(NuGetPackageId)|%(Identity)|%(FullPath)|%(AssetType)')" Overwrite="true"/>
+		<WriteLinesToFile File="$(RefRespFile)" Lines="@(ReferencePath->'%(FusionName)|%(NuGetPackageId)|%(FullPath)')" Overwrite="true"/>
 
 		<ExecAsync Condition="!$(LicenseCompilerArgs.Contains('--sync'))" FilePath="dotnet" Arguments="$(LicenseCompiler) --s $(SolutionDir) --r $(RefRespFile) $(LicenseCompilerArgs)"/>
 		<ExecSync Condition="$(LicenseCompilerArgs.Contains('--sync'))" FilePath="dotnet" Arguments="$(LicenseCompiler) --s $(SolutionDir) --r $(RefRespFile) $(LicenseCompilerArgs)"/>

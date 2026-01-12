@@ -50,7 +50,7 @@ public static class MicrosoftLicences
 				Notice = MicrosoftLicences.GetNotice()
 			};
 
-			info.RelatedPacakges.AddRange( result.MicrosoftPackages.Convert( p => p.Id ) );
+			info.RelatedPacakges.AddRange( result.MicrosoftPackages.Convert( p => $"{p.Name} [{p.Version}]" ) );
 			result.AddPackage( info );
 		}
 	}

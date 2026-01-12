@@ -86,7 +86,7 @@ public class PackageInfo
 	/// </summary>
 	public static int AlphaSort( PackageInfo l, PackageInfo r )
 	{
-		int compare = l.Name.CompareTo( r.Name, StringComparison.Ordinal );
+		int compare = l.Name.CompareTo( r.Name, StringComparison.InvariantCultureIgnoreCase );
 		if( compare == 0 )
 		{
 			compare = l.Version.CompareTo( r.Version );
