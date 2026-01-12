@@ -4,8 +4,8 @@ Third party licenses
 *This software stands on the shoulders of the following giants:*
 
 
-> CommandLineParser [2.9.1]
-> -------------------------
+> CommandLineParser [2.9.1.0]
+> ---------------------------
 >
 > Homepage: <https://github.com/commandlineparser/commandline>
 >
@@ -38,8 +38,19 @@ Third party licenses
 >>
 >
 
-> Erlin.Lib.Common [2.1.1]
-> ------------------------
+> ConfigureAwait.Fody [3.3.2.0]
+> -----------------------------
+>
+> Homepage: <https://github.com/Fody/ConfigureAwait>
+>
+> Authors: Cameron MacFarland, Simon Cropp
+>
+> License:
+>> [MIT](https://spdx.org/licenses/MIT.html)
+>
+
+> Erlin.Lib.Common [2.1.1.0]
+> --------------------------
 >
 > Homepage: <https://github.com/ErlinEmrys/Lib.Common>
 >
@@ -72,8 +83,8 @@ Third party licenses
 >>
 >
 
-> Newtonsoft.Json [13.0.4]
-> ------------------------
+> Newtonsoft.Json [13.0.0.0]
+> --------------------------
 >
 > Homepage: <https://www.newtonsoft.com/json>
 >
@@ -105,8 +116,8 @@ Third party licenses
 >>
 >
 
-> Serilog [4.3.0]
-> ---------------
+> Serilog [4.3.0.0]
+> -----------------
 >
 > Homepage: <https://serilog.net/>
 >
@@ -118,8 +129,8 @@ Third party licenses
 >> [Apache-2.0](https://spdx.org/licenses/Apache-2.0.html)
 >
 
-> Serilog.Extensions.Hosting [10.0.0]
-> -----------------------------------
+> Serilog.Extensions.Hosting [10.0.0.0]
+> -------------------------------------
 >
 > Homepage: <https://github.com/serilog/serilog-extensions-hosting>
 >
@@ -129,8 +140,8 @@ Third party licenses
 >> [Apache-2.0](https://spdx.org/licenses/Apache-2.0.html)
 >
 
-> Serilog.Extensions.Logging [10.0.0]
-> -----------------------------------
+> Serilog.Extensions.Logging [10.0.0.0]
+> -------------------------------------
 >
 > Homepage: <https://github.com/serilog/serilog-extensions-logging>
 >
@@ -140,8 +151,8 @@ Third party licenses
 >> [Apache-2.0](https://spdx.org/licenses/Apache-2.0.html)
 >
 
-> Serilog.Sinks.Console [6.1.1]
-> -----------------------------
+> Serilog.Sinks.Console [6.1.1.0]
+> -------------------------------
 >
 > Homepage: <https://github.com/serilog/serilog-sinks-console>
 >
@@ -151,23 +162,12 @@ Third party licenses
 >> [Apache-2.0](https://spdx.org/licenses/Apache-2.0.html)
 >
 
-> Serilog.Sinks.File [7.0.0]
-> --------------------------
+> Serilog.Sinks.File [7.0.0.0]
+> ----------------------------
 >
 > Homepage: <https://github.com/serilog/serilog-sinks-file>
 >
 > Authors: Serilog Contributors
->
-> License:
->> [Apache-2.0](https://spdx.org/licenses/Apache-2.0.html)
->
-
-> SimpleExec [11.0.0]
-> -------------------
->
-> Homepage: <https://github.com/adamralph/simple-exec>
->
-> Authors: SimpleExec
 >
 > License:
 >> [Apache-2.0](https://spdx.org/licenses/Apache-2.0.html)
@@ -183,108 +183,190 @@ Third party licenses
 > Copyright: © Microsoft Corporation. All rights reserved.
 >
 > Packages:
->> + Microsoft.Build@18.0.2
->> + Microsoft.Build.Framework@15.1.0.0
->> + Microsoft.CSharp@4.3.0
->> + Microsoft.Extensions.Configuration.Abstractions@10.0.0.0
->> + Microsoft.Extensions.DependencyInjection@10.0.0.0
->> + Microsoft.Extensions.DependencyInjection.Abstractions@10.0.0.0
->> + Microsoft.Extensions.Diagnostics.Abstractions@10.0.0.0
->> + Microsoft.Extensions.FileProviders.Abstractions@10.0.0.0
->> + Microsoft.Extensions.Hosting.Abstractions@10.0.0
->> + Microsoft.Extensions.Logging@10.0.0
->> + Microsoft.Extensions.Logging.Abstractions@10.0.0.0
->> + Microsoft.Extensions.Options@10.0.0.0
->> + Microsoft.Extensions.Primitives@10.0.0.0
->> + Microsoft.NET.StringTools@1.0.0.0
->> + Microsoft.VisualStudio.SolutionPersistence@1.0.0.0
->> + Microsoft.Win32.Primitives@10.0.0.0
->> + Microsoft.Win32.Registry@10.0.0.0
->> + NETStandard.Library@1.6.1
->> + System.Collections@10.0.0.0
->> + System.Collections.Concurrent@10.0.0.0
->> + System.Collections.Immutable@10.0.0.0
->> + System.Collections.NonGeneric@10.0.0.0
->> + System.Collections.Specialized@10.0.0.0
->> + System.ComponentModel@10.0.0.0
->> + System.ComponentModel.Annotations@10.0.0.0
->> + System.ComponentModel.EventBasedAsync@10.0.0.0
->> + System.ComponentModel.Primitives@10.0.0.0
->> + System.ComponentModel.TypeConverter@10.0.0.0
->> + System.Configuration.ConfigurationManager@9.0.0.0
->> + System.Console@10.0.0.0
->> + System.Diagnostics.DiagnosticSource@10.0.0.0
->> + System.Diagnostics.EventLog@9.0.0.0
->> + System.Diagnostics.FileVersionInfo@10.0.0.0
->> + System.Diagnostics.Process@10.0.0.0
->> + System.Diagnostics.StackTrace@10.0.0.0
->> + System.Diagnostics.TextWriterTraceListener@9.0.0.0
->> + System.Diagnostics.TraceSource@10.0.0.0
->> + System.Diagnostics.Tracing@10.0.0.0
->> + System.Drawing.Primitives@10.0.0.0
->> + System.Formats.Asn1@10.0.0.0
->> + System.IO.Compression@10.0.0.0
->> + System.IO.Compression.Brotli@10.0.0.0
->> + System.IO.MemoryMappedFiles@10.0.0.0
->> + System.IO.Pipelines@10.0.0.0
->> + System.IO.Pipes@10.0.0.0
->> + System.Linq@10.0.0.0
->> + System.Linq.Expressions@10.0.0.0
->> + System.Linq.Parallel@10.0.0.0
->> + System.Memory@10.0.0.0
->> + System.Net.Http@10.0.0.0
->> + System.Net.NameResolution@10.0.0.0
->> + System.Net.NetworkInformation@10.0.0.0
->> + System.Net.Primitives@10.0.0.0
->> + System.Net.Quic@10.0.0.0
->> + System.Net.Requests@10.0.0.0
->> + System.Net.Security@10.0.0.0
->> + System.Net.Sockets@10.0.0.0
->> + System.Net.WebClient@9.0.0.0
->> + System.Net.WebHeaderCollection@10.0.0.0
->> + System.Numerics.Vectors@10.0.0.0
->> + System.ObjectModel@10.0.0.0
->> + System.Private.CoreLib@10.0.0.0
->> + System.Private.Uri@10.0.0.0
->> + System.Private.Xml@10.0.0.0
->> + System.Private.Xml.Linq@10.0.0.0
->> + System.Reflection.Emit@10.0.0.0
->> + System.Reflection.Emit.ILGeneration@10.0.0.0
->> + System.Reflection.Emit.Lightweight@10.0.0.0
->> + System.Reflection.Metadata@10.0.0.0
->> + System.Reflection.MetadataLoadContext@9.0.0.0
->> + System.Reflection.Primitives@10.0.0.0
->> + System.Resources.Writer@10.0.0.0
->> + System.Runtime@10.0.0.0
->> + System.Runtime.InteropServices@10.0.0.0
->> + System.Runtime.Intrinsics@10.0.0.0
->> + System.Runtime.Loader@10.0.0.0
->> + System.Runtime.Numerics@10.0.0.0
->> + System.Runtime.Serialization.Formatters@8.1.0.0
->> + System.Runtime.Serialization.Primitives@4.3.0
->> + System.Security.AccessControl@10.0.0.0
->> + System.Security.Claims@10.0.0.0
->> + System.Security.Cryptography@10.0.0.0
->> + System.Security.Cryptography.ProtectedData@9.0.0.0
->> + System.Security.Principal.Windows@10.0.0.0
->> + System.Text.Encoding.CodePages@10.0.0.0
->> + System.Text.Encoding.Extensions@10.0.0.0
->> + System.Text.Encodings.Web@10.0.0.0
->> + System.Text.Json@10.0.0.0
->> + System.Text.RegularExpressions@10.0.0.0
->> + System.Threading@10.0.0.0
->> + System.Threading.Channels@10.0.0.0
->> + System.Threading.Overlapped@10.0.0.0
->> + System.Threading.Tasks.Dataflow@10.0.0.0
->> + System.Threading.Tasks.Parallel@10.0.0.0
->> + System.Threading.Thread@10.0.0.0
->> + System.Threading.ThreadPool@10.0.0.0
->> + System.ValueTuple@4.5.0
->> + System.Web.HttpUtility@10.0.0.0
->> + System.Xml.ReaderWriter@10.0.0.0
->> + System.Xml.XDocument@10.0.0.0
->> + System.Xml.XmlDocument@4.3.0
->> + System.Xml.XmlSerializer@9.0.0.0
+>> + Microsoft.Build [15.1.0.0]
+>> + Microsoft.Build.Framework [15.1.0.0]
+>> + Microsoft.CSharp [10.0.0.0]
+>> + Microsoft.Extensions.Configuration.Abstractions [10.0.0.0]
+>> + Microsoft.Extensions.DependencyInjection [10.0.0.0]
+>> + Microsoft.Extensions.DependencyInjection.Abstractions [10.0.0.0]
+>> + Microsoft.Extensions.Diagnostics.Abstractions [10.0.0.0]
+>> + Microsoft.Extensions.FileProviders.Abstractions [10.0.0.0]
+>> + Microsoft.Extensions.Hosting.Abstractions [10.0.0.0]
+>> + Microsoft.Extensions.Logging [10.0.0.0]
+>> + Microsoft.Extensions.Logging.Abstractions [10.0.0.0]
+>> + Microsoft.Extensions.Options [10.0.0.0]
+>> + Microsoft.Extensions.Primitives [10.0.0.0]
+>> + Microsoft.NET.StringTools [1.0.0.0]
+>> + Microsoft.VisualBasic [10.0.0.0]
+>> + Microsoft.VisualBasic.Core [15.0.0.0]
+>> + Microsoft.Win32.Primitives [10.0.0.0]
+>> + Microsoft.Win32.Registry [10.0.0.0]
+>> + mscorlib [4.0.0.0]
+>> + netstandard [2.1.0.0]
+>> + System [4.0.0.0]
+>> + System.AppContext [10.0.0.0]
+>> + System.Buffers [10.0.0.0]
+>> + System.Collections [10.0.0.0]
+>> + System.Collections.Concurrent [10.0.0.0]
+>> + System.Collections.Immutable [10.0.0.0]
+>> + System.Collections.NonGeneric [10.0.0.0]
+>> + System.Collections.Specialized [10.0.0.0]
+>> + System.ComponentModel [10.0.0.0]
+>> + System.ComponentModel.Annotations [10.0.0.0]
+>> + System.ComponentModel.DataAnnotations [4.0.0.0]
+>> + System.ComponentModel.EventBasedAsync [10.0.0.0]
+>> + System.ComponentModel.Primitives [10.0.0.0]
+>> + System.ComponentModel.TypeConverter [10.0.0.0]
+>> + System.Configuration [4.0.0.0]
+>> + System.Configuration.ConfigurationManager [9.0.0.0]
+>> + System.Console [10.0.0.0]
+>> + System.Core [4.0.0.0]
+>> + System.Data [4.0.0.0]
+>> + System.Data.Common [10.0.0.0]
+>> + System.Data.DataSetExtensions [10.0.0.0]
+>> + System.Diagnostics.Contracts [10.0.0.0]
+>> + System.Diagnostics.Debug [10.0.0.0]
+>> + System.Diagnostics.DiagnosticSource [10.0.0.0]
+>> + System.Diagnostics.EventLog [9.0.0.0]
+>> + System.Diagnostics.FileVersionInfo [10.0.0.0]
+>> + System.Diagnostics.Process [10.0.0.0]
+>> + System.Diagnostics.StackTrace [10.0.0.0]
+>> + System.Diagnostics.TextWriterTraceListener [10.0.0.0]
+>> + System.Diagnostics.Tools [10.0.0.0]
+>> + System.Diagnostics.TraceSource [10.0.0.0]
+>> + System.Diagnostics.Tracing [10.0.0.0]
+>> + System.Drawing [4.0.0.0]
+>> + System.Drawing.Primitives [10.0.0.0]
+>> + System.Dynamic.Runtime [10.0.0.0]
+>> + System.Formats.Asn1 [10.0.0.0]
+>> + System.Formats.Tar [10.0.0.0]
+>> + System.Globalization [10.0.0.0]
+>> + System.Globalization.Calendars [10.0.0.0]
+>> + System.Globalization.Extensions [10.0.0.0]
+>> + System.IO [10.0.0.0]
+>> + System.IO.Compression [10.0.0.0]
+>> + System.IO.Compression.Brotli [10.0.0.0]
+>> + System.IO.Compression.FileSystem [4.0.0.0]
+>> + System.IO.Compression.ZipFile [10.0.0.0]
+>> + System.IO.FileSystem [10.0.0.0]
+>> + System.IO.FileSystem.AccessControl [10.0.0.0]
+>> + System.IO.FileSystem.DriveInfo [10.0.0.0]
+>> + System.IO.FileSystem.Primitives [10.0.0.0]
+>> + System.IO.FileSystem.Watcher [10.0.0.0]
+>> + System.IO.IsolatedStorage [10.0.0.0]
+>> + System.IO.MemoryMappedFiles [10.0.0.0]
+>> + System.IO.Pipelines [10.0.0.0]
+>> + System.IO.Pipes [10.0.0.0]
+>> + System.IO.Pipes.AccessControl [10.0.0.0]
+>> + System.IO.UnmanagedMemoryStream [10.0.0.0]
+>> + System.Linq [10.0.0.0]
+>> + System.Linq.AsyncEnumerable [10.0.0.0]
+>> + System.Linq.Expressions [10.0.0.0]
+>> + System.Linq.Parallel [10.0.0.0]
+>> + System.Linq.Queryable [10.0.0.0]
+>> + System.Memory [10.0.0.0]
+>> + System.Net [4.0.0.0]
+>> + System.Net.Http [10.0.0.0]
+>> + System.Net.Http.Json [10.0.0.0]
+>> + System.Net.HttpListener [10.0.0.0]
+>> + System.Net.Mail [10.0.0.0]
+>> + System.Net.NameResolution [10.0.0.0]
+>> + System.Net.NetworkInformation [10.0.0.0]
+>> + System.Net.Ping [10.0.0.0]
+>> + System.Net.Primitives [10.0.0.0]
+>> + System.Net.Quic [10.0.0.0]
+>> + System.Net.Requests [10.0.0.0]
+>> + System.Net.Security [10.0.0.0]
+>> + System.Net.ServerSentEvents [10.0.0.0]
+>> + System.Net.ServicePoint [10.0.0.0]
+>> + System.Net.Sockets [10.0.0.0]
+>> + System.Net.WebClient [10.0.0.0]
+>> + System.Net.WebHeaderCollection [10.0.0.0]
+>> + System.Net.WebProxy [10.0.0.0]
+>> + System.Net.WebSockets [10.0.0.0]
+>> + System.Net.WebSockets.Client [10.0.0.0]
+>> + System.Numerics [4.0.0.0]
+>> + System.Numerics.Vectors [10.0.0.0]
+>> + System.ObjectModel [10.0.0.0]
+>> + System.Reflection [10.0.0.0]
+>> + System.Reflection.DispatchProxy [10.0.0.0]
+>> + System.Reflection.Emit [10.0.0.0]
+>> + System.Reflection.Emit.ILGeneration [10.0.0.0]
+>> + System.Reflection.Emit.Lightweight [10.0.0.0]
+>> + System.Reflection.Extensions [10.0.0.0]
+>> + System.Reflection.Metadata [10.0.0.0]
+>> + System.Reflection.MetadataLoadContext [9.0.0.0]
+>> + System.Reflection.Primitives [10.0.0.0]
+>> + System.Reflection.TypeExtensions [10.0.0.0]
+>> + System.Resources.Reader [10.0.0.0]
+>> + System.Resources.ResourceManager [10.0.0.0]
+>> + System.Resources.Writer [10.0.0.0]
+>> + System.Runtime [10.0.0.0]
+>> + System.Runtime.CompilerServices.Unsafe [10.0.0.0]
+>> + System.Runtime.CompilerServices.VisualC [10.0.0.0]
+>> + System.Runtime.Extensions [10.0.0.0]
+>> + System.Runtime.Handles [10.0.0.0]
+>> + System.Runtime.InteropServices [10.0.0.0]
+>> + System.Runtime.InteropServices.JavaScript [10.0.0.0]
+>> + System.Runtime.InteropServices.RuntimeInformation [10.0.0.0]
+>> + System.Runtime.Intrinsics [10.0.0.0]
+>> + System.Runtime.Loader [10.0.0.0]
+>> + System.Runtime.Numerics [10.0.0.0]
+>> + System.Runtime.Serialization [4.0.0.0]
+>> + System.Runtime.Serialization.Formatters [8.1.0.0]
+>> + System.Runtime.Serialization.Json [10.0.0.0]
+>> + System.Runtime.Serialization.Primitives [10.0.0.0]
+>> + System.Runtime.Serialization.Xml [10.0.0.0]
+>> + System.Security [4.0.0.0]
+>> + System.Security.AccessControl [10.0.0.0]
+>> + System.Security.Claims [10.0.0.0]
+>> + System.Security.Cryptography [10.0.0.0]
+>> + System.Security.Cryptography.Algorithms [10.0.0.0]
+>> + System.Security.Cryptography.Cng [10.0.0.0]
+>> + System.Security.Cryptography.Csp [10.0.0.0]
+>> + System.Security.Cryptography.Encoding [10.0.0.0]
+>> + System.Security.Cryptography.OpenSsl [10.0.0.0]
+>> + System.Security.Cryptography.Primitives [10.0.0.0]
+>> + System.Security.Cryptography.ProtectedData [9.0.0.0]
+>> + System.Security.Cryptography.X509Certificates [10.0.0.0]
+>> + System.Security.Principal [10.0.0.0]
+>> + System.Security.Principal.Windows [10.0.0.0]
+>> + System.Security.SecureString [10.0.0.0]
+>> + System.ServiceModel.Web [4.0.0.0]
+>> + System.ServiceProcess [4.0.0.0]
+>> + System.Text.Encoding [10.0.0.0]
+>> + System.Text.Encoding.CodePages [10.0.0.0]
+>> + System.Text.Encoding.Extensions [10.0.0.0]
+>> + System.Text.Encodings.Web [10.0.0.0]
+>> + System.Text.Json [10.0.0.0]
+>> + System.Text.RegularExpressions [10.0.0.0]
+>> + System.Threading [10.0.0.0]
+>> + System.Threading.AccessControl [10.0.0.0]
+>> + System.Threading.Channels [10.0.0.0]
+>> + System.Threading.Overlapped [10.0.0.0]
+>> + System.Threading.Tasks [10.0.0.0]
+>> + System.Threading.Tasks.Dataflow [10.0.0.0]
+>> + System.Threading.Tasks.Extensions [10.0.0.0]
+>> + System.Threading.Tasks.Parallel [10.0.0.0]
+>> + System.Threading.Thread [10.0.0.0]
+>> + System.Threading.ThreadPool [10.0.0.0]
+>> + System.Threading.Timer [10.0.0.0]
+>> + System.Transactions [4.0.0.0]
+>> + System.Transactions.Local [10.0.0.0]
+>> + System.ValueTuple [10.0.0.0]
+>> + System.Web [4.0.0.0]
+>> + System.Web.HttpUtility [10.0.0.0]
+>> + System.Windows [4.0.0.0]
+>> + System.Xml [4.0.0.0]
+>> + System.Xml.Linq [4.0.0.0]
+>> + System.Xml.ReaderWriter [10.0.0.0]
+>> + System.Xml.Serialization [4.0.0.0]
+>> + System.Xml.XDocument [10.0.0.0]
+>> + System.Xml.XmlDocument [10.0.0.0]
+>> + System.Xml.XmlSerializer [10.0.0.0]
+>> + System.Xml.XPath [10.0.0.0]
+>> + System.Xml.XPath.XDocument [10.0.0.0]
+>> + WindowsBase [4.0.0.0]
 >
 > License:
 >> The MIT License (MIT)
