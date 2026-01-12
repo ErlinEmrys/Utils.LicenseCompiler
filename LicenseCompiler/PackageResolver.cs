@@ -81,7 +81,7 @@ public static class PackageResolver
 
 				PackageInfo package = new()
 				{
-					Name = nugetPackageId,
+					Name = assemblyName.Name,
 					Version = assemblyName.Version,
 					AssemblyFilePath = assemblyFilePath,
 					Parent = result
@@ -93,6 +93,7 @@ public static class PackageResolver
 				}
 				else
 				{
+					package.Name = nugetPackageId;
 					result.AddPackage( package );
 					_packageWorker.Enqueue( package );
 				}
