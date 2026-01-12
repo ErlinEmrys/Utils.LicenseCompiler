@@ -61,7 +61,7 @@ public static class OutputWriter
 
 		foreach( PackageInfo fPackage in result.Packages )
 		{
-			await stream.WriteHeader( $"{fPackage.Name} [{fPackage.Version}]", MD_HEADER_SECOND_SEPARATOR, 1 );
+			await stream.WriteHeader( fPackage.Id, MD_HEADER_SECOND_SEPARATOR, 1 );
 
 			if( fPackage.Homepage.IsNotEmpty() )
 			{

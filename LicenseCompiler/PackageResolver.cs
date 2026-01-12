@@ -81,7 +81,7 @@ public static class PackageResolver
 
 				PackageInfo package = new()
 				{
-					Name = assemblyName.Name,
+					Name = nugetPackageId,
 					Version = assemblyName.Version,
 					AssemblyFilePath = assemblyFilePath,
 					Parent = result
@@ -129,7 +129,7 @@ public static class PackageResolver
 		}
 		else
 		{
-			Log.Wrn( "Package {PackageID} not found in {Path}", package.Id, package.NuspecDirPath );
+			Log.Wrn( "Package {PackageID} not found in {Path}", package.Id, nuspecFilePath );
 		}
 	}
 

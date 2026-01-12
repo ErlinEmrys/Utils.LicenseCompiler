@@ -16,7 +16,7 @@ public class PackageInfo
 	[ JsonIgnore ]
 	public string Id
 	{
-		get { return $"{Name}@{Version}"; }
+		get { return $"{Name} [{Version}]"; }
 	}
 
 	/// <summary>
