@@ -58,7 +58,7 @@ public static class PackageResolver
 		{
 			if( fLine.IsNotEmpty() )
 			{
-				string[] parts = fLine.Split( '|' );
+				string[] parts = fLine.Trim( '\'' ).Split( '|' );
 				if( parts.Length < 4 )
 				{
 					Log.Wrn( "Invalid line in references file: {Line}", fLine );

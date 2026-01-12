@@ -9,10 +9,11 @@
 			<RefRespFile>$(IntermediateOutputPath)LicenseCompiler.references.rsp</RefRespFile>
 		</PropertyGroup>
 
-		<!-- Write the formatted reference data to the file, one per line -->
-		<WriteLinesToFile File="$(RefRespFile)" Lines="@(ReferencePath->%(FusionName)|%(NuGetPackageId)|%(Identity)|%(FullPath)|%(FullPath))" Overwrite="true"/>
-
 		<Message Text="Erlin.Utils.LicenseCompiler: Generating licenses for solution: $(SolutionPath); Arguments: $(LicenseCompilerArgs) References file: $(RefRespFile)" Importance="high"/>
+
+		<!-- Write the formatted reference data to the file, one per line -->
+		<WriteLinesToFile File="$(RefRespFile)" Lines="@(ReferencePath->'%(FusionName)|%(NuGetPackageId)|%(Identity)|%(FullPath)|%(FullPath)')" Overwrite="true"/>
+
 		<ExecAsync Condition="!$(LicenseCompilerArgs.Contains('--sync'))" FilePath="dotnet" Arguments="$(LicenseCompiler) --r $(RefRespFile) $(LicenseCompilerArgs)"/>
 		<ExecSync Condition="$(LicenseCompilerArgs.Contains('--sync'))" FilePath="dotnet" Arguments="$(LicenseCompiler) --r $(RefRespFile) $(LicenseCompilerArgs)"/>
 	</Target>
