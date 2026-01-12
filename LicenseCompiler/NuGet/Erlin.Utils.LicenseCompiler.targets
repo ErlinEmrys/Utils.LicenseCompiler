@@ -6,7 +6,7 @@
 	<Target Name="AfterResolveReferences">
 		<PropertyGroup>
 			<!-- Define a path for the temporary response file -->
-			<RefRespFile>$(IntermediateOutputPath)LicenseCompiler.references.rsp</RefRespFile>
+			<RefRespFile>$([System.IO.Path]::GetFullPath('$(IntermediateOutputPath)'))LicenseCompiler.references.rsp</RefRespFile>
 		</PropertyGroup>
 
 		<Message Text="Erlin.Utils.LicenseCompiler: Generating licenses for solution: $(SolutionDir); Arguments: $(LicenseCompilerArgs); References file: $(RefRespFile)" Importance="high"/>
