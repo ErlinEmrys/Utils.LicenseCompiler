@@ -69,17 +69,6 @@
 		<PackageReference Include="Serilog.Sinks.File" Version="7.0.0" />
 	</ItemGroup>
 
-	<ItemGroup>
-		<None Include="..\LICENSE.md" Link="LICENSE.md">
-			<Pack>True</Pack>
-			<PackagePath></PackagePath>
-		</None>
-		<None Include="..\LICENSE_THIRD_PARTIES.md" Link="LICENSE_THIRD_PARTIES.md">
-			<Pack>True</Pack>
-			<PackagePath></PackagePath>
-		</None>
-	</ItemGroup>
-
 	<Target Name="GetMyPackageFiles" DependsOnTargets="Publish">
 		<ItemGroup>
 			<TfmSpecificPackageFiles Include="$(PublishDir)/**/*.*"/>
