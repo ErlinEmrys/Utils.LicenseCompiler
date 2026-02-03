@@ -9,6 +9,7 @@ namespace Erlin.Utils.LicenseCompiler;
 /// </summary>
 public static class OutputWriter
 {
+	public const string LINE_ENDING = "\n";
 	public const char MD_HEADER_FIRST_SEPARATOR = '=';
 	public const char MD_HEADER_SECOND_SEPARATOR = '-';
 
@@ -26,6 +27,7 @@ public static class OutputWriter
 		FileSystemHelper.DirectoryEnsure( args.OutputJsonPath );
 
 		await using StreamWriter stream = new( args.OutputJsonPath );
+		stream.NewLine = LINE_ENDING;
 		await using JsonTextWriter writer = new( stream );
 
 		if( args.OutputJsonIndented )
@@ -54,6 +56,7 @@ public static class OutputWriter
 		FileSystemHelper.DirectoryEnsure( args.OutputMDPath );
 
 		await using StreamWriter stream = new( args.OutputMDPath );
+		stream.NewLine = LINE_ENDING;
 
 		await stream.WriteHeader( "Third party licenses", MD_HEADER_FIRST_SEPARATOR );
 		await stream.WriteParagraph( "*This software stands on the shoulders of the following giants:*" );
