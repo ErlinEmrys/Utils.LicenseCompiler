@@ -38,6 +38,7 @@
 		<PackageIcon>icon.png</PackageIcon>
 		<PackageTags>Erlin;.NetCore;License;Build</PackageTags>
 		<IncludeBuildOutput>False</IncludeBuildOutput>
+		<DevelopmentDependency>true</DevelopmentDependency>
 		<TargetsForTfmSpecificContentInPackage>$(TargetsForTfmSpecificBuildOutput);GetMyPackageFiles</TargetsForTfmSpecificContentInPackage>
 	</PropertyGroup>
 
