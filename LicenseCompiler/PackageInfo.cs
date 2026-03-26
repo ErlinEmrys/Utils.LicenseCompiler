@@ -32,6 +32,7 @@ public class PackageInfo
 	/// <summary>
 	///    Path to the assembly file of the package
 	/// </summary>
+	[ JsonIgnore ]
 	public required string AssemblyFilePath { get; set; }
 
 	/// <summary>
