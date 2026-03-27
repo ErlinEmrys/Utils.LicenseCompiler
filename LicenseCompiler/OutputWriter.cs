@@ -81,7 +81,7 @@ public static class OutputWriter
 				await stream.WriteParagraph( $"Copyright: {fPackage.Copyright}", 1 );
 			}
 
-			if( fPackage.RelatedPacakges.Count > 0 )
+			if( fPackage.RelatedPacakges is { Count: > 0 } )
 			{
 				await stream.WriteLineAsync( "Packages:", 1 );
 				foreach( string fRelatedPackage in fPackage.RelatedPacakges )

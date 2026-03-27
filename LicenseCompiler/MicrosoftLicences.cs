@@ -47,7 +47,8 @@ public static class MicrosoftLicences
 				Homepage = "https://dot.net",
 				LicenseDataType = LicenseDataType.Text,
 				License = MicrosoftLicences.GetLicense(),
-				Notice = MicrosoftLicences.GetNotice()
+				Notice = MicrosoftLicences.GetNotice(),
+				RelatedPacakges = [ ]
 			};
 
 			info.RelatedPacakges.AddRange( result.MicrosoftPackages.Convert( p => p.Id ) );

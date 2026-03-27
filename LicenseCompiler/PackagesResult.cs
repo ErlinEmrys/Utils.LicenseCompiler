@@ -1,3 +1,5 @@
+using Newtonsoft.Json;
+
 namespace Erlin.Utils.LicenseCompiler;
 
 /// <summary>
@@ -13,6 +15,7 @@ public class PackagesResult
 	/// <summary>
 	///    List of Microsoft packages that project depends upon
 	/// </summary>
+	[ JsonIgnore ]
 	public List< PackageInfo > MicrosoftPackages { get; } = [ ];
 
 	/// <summary>
