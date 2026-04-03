@@ -10,6 +10,7 @@ public class PackagesResult
 	/// <summary>
 	///    Program arguments
 	/// </summary>
+	[ JsonIgnore ]
 	public required ProgramArgs Args { get; init; }
 
 	/// <summary>

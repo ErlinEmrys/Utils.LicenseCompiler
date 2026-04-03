@@ -8,7 +8,7 @@ namespace Erlin.Utils.LicenseCompiler;
 ///    Information about package
 /// </summary>
 [ DebuggerDisplay( "{Id}" ) ]
-public struct PackageInfo
+public class PackageInfo
 {
 	/// <summary>
 	///    Package ID
@@ -34,7 +34,7 @@ public struct PackageInfo
 	/// </summary>
 	public bool ShouldSerializeVersion()
 	{
-		return Parent is null || !Parent.Args.OmmitVersion;
+		return !Parent.Args.OmmitVersion;
 	}
 
 	/// <summary>
