@@ -40,6 +40,7 @@ public static class OutputWriter
 		JsonSerializer serializer = new();
 		serializer.NullValueHandling = NullValueHandling.Ignore;
 		serializer.Serialize( writer, result );
+		await writer.WriteRawAsync( LINE_ENDING );
 	}
 
 	/// <summary>
@@ -64,7 +65,7 @@ public static class OutputWriter
 
 		foreach( PackageInfo fPackage in result.Packages )
 		{
-			await stream.WriteHeader( fPackage.Id, MD_HEADER_SECOND_SEPARATOR, 1 );
+			await stream.WriteHeader( args.OmmitVersion ? fPackage.Name : fPackage.Id, MD_HEADER_SECOND_SEPARATOR, 1 );
 
 			if( fPackage.Homepage.IsNotEmpty() )
 			{

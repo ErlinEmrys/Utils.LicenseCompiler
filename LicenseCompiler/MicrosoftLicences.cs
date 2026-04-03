@@ -32,7 +32,7 @@ public static class MicrosoftLicences
 	/// <summary>
 	///    Processes all Microsoft packages
 	/// </summary>
-	public static void ProcessMicrosoftPackages( PackagesResult result )
+	public static void ProcessMicrosoftPackages( ProgramArgs args, PackagesResult result )
 	{
 		if( result.MicrosoftPackages.Count > 0 )
 		{
@@ -51,7 +51,9 @@ public static class MicrosoftLicences
 				RelatedPacakges = [ ]
 			};
 
-			info.RelatedPacakges.AddRange( result.MicrosoftPackages.Convert( p => p.Id ) );
+			info.RelatedPacakges.AddRange( result.MicrosoftPackages.Convert( p => args.OmmitVersion ? p.Name : p.Id ) );
+			info.RelatedPacakges.Sort();
+
 			result.AddPackage( info );
 		}
 	}

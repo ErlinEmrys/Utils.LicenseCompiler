@@ -8,6 +8,11 @@ namespace Erlin.Utils.LicenseCompiler;
 public class PackagesResult
 {
 	/// <summary>
+	///    Program arguments
+	/// </summary>
+	public required ProgramArgs Args { get; init; }
+
+	/// <summary>
 	///    List of packages that project depends upon
 	/// </summary>
 	public List< PackageInfo > Packages { get; } = [ ];

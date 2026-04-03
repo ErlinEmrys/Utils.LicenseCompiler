@@ -25,7 +25,7 @@ public static class PackageResolver
 	/// </summary>
 	public static async Task< PackagesResult > ResolvePackages( ProgramArgs args, CancellationToken cancelToken = default )
 	{
-		PackagesResult result = new();
+		PackagesResult result = new() { Args = args };
 
 		// Read packages from ref file
 		await PackageResolver.ReadRefFile( args, result, cancelToken );
@@ -38,7 +38,7 @@ public static class PackageResolver
 		result.MicrosoftPackages.Sort( PackageInfo.AlphaSort );
 
 		// Proces Microsoft packages differently, becouse of the .NET Framework
-		MicrosoftLicences.ProcessMicrosoftPackages( result );
+		MicrosoftLicences.ProcessMicrosoftPackages( args, result );
 
 		return result;
 	}

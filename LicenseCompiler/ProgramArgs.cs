@@ -54,4 +54,10 @@ public class ProgramArgs
 	/// </summary>
 	[ Option( "sync", HelpText = "Run synchronsously during the build" ) ]
 	public bool SynchronousRun { get; set; }
+
+	/// <summary>
+	///    Whether the output should be stripped of version information
+	/// </summary>
+	[ Option( "ommit_version", HelpText = "Ommit version information from the output" ) ]
+	public bool OmmitVersion { get; set; }
 }

@@ -20,12 +20,6 @@
 		<RunAnalyzersDuringLiveAnalysis>False</RunAnalyzersDuringLiveAnalysis>
 		<TreatWarningsAsErrors>False</TreatWarningsAsErrors>
 
-		<WeaverConfiguration>
-			<Weavers>
-				<ConfigureAwait ContinueOnCapturedContext="false" />
-			</Weavers>
-		</WeaverConfiguration>
-
 		<PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
 		<Authors>Erlin Emrys</Authors>
 		<Copyright>© Erlin Emrys</Copyright>
