@@ -23,29 +23,29 @@ public static class FileResolver
 	/// <summary>
 	///    Attempt to retrieve content of LICENSE file
 	/// </summary>
-	public static string? GetLicenseFile( string? nugetPath, string? licenseFilePath )
+	public static string? GetLicenseFile( string? rootPath, string? licenseFilePath )
 	{
-		return FileResolver.GetFile( nugetPath, licenseFilePath, FileResolver.LicenseFileNames, FileResolver.FileExtensions );
+		return FileResolver.GetFile( rootPath, licenseFilePath, FileResolver.LicenseFileNames, FileResolver.FileExtensions );
 	}
 
 	/// <summary>
 	///    Attempt to retrieve content of NOTICE file
 	/// </summary>
-	public static string? GetNoticeFile( string? nugetPath )
+	public static string? GetNoticeFile( string? rootPath )
 	{
-		return FileResolver.GetFile( nugetPath, null, FileResolver.NoticeFileNames, FileResolver.FileExtensions );
+		return FileResolver.GetFile( rootPath, null, FileResolver.NoticeFileNames, FileResolver.FileExtensions );
 	}
 
 	/// <summary>
 	///    Attempt to retrieve content of a file
 	/// </summary>
-	private static string? GetFile( string? nugetPath, string? filePath, IEnumerable< string > fileNames, HashSet< string > fileExtensions )
+	private static string? GetFile( string? rootPath, string? filePath, IEnumerable< string > fileNames, HashSet< string > fileExtensions )
 	{
-		ArgumentException.ThrowIfNullOrEmpty( nugetPath );
+		ArgumentException.ThrowIfNullOrEmpty( rootPath );
 
 		if( filePath.IsNotEmpty() )
 		{
-			filePath = Path.Combine( nugetPath, filePath );
+			filePath = Path.Combine( rootPath, filePath );
 			if( File.Exists( filePath ) )
 			{
 				return File.ReadAllText( filePath );
@@ -56,7 +56,7 @@ public static class FileResolver
 		{
 			foreach( string fFileExt in fileExtensions )
 			{
-				filePath = Path.Combine( nugetPath, fFileName + fFileExt );
+				filePath = Path.Combine( rootPath, fFileName + fFileExt );
 				if( File.Exists( filePath ) )
 				{
 					return File.ReadAllText( filePath );

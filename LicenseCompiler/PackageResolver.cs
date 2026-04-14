@@ -25,7 +25,9 @@ public static class PackageResolver
 	/// </summary>
 	public static async Task< PackagesResult > ResolvePackages( ProgramArgs args, CancellationToken cancelToken = default )
 	{
-		PackagesResult result = new() { Args = args };
+		string? projectLicense = FileResolver.GetLicenseFile( args.SolutionPath, null );
+
+		PackagesResult result = new() { Args = args, ProjectLicense = projectLicense };
 
 		// Read packages from ref file
 		await PackageResolver.ReadRefFile( args, result, cancelToken );

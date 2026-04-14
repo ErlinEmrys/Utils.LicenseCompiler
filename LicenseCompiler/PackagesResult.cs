@@ -8,15 +8,20 @@ namespace Erlin.Utils.LicenseCompiler;
 public class PackagesResult
 {
 	/// <summary>
-	///    Program arguments
+	///    License for the current project
 	/// </summary>
-	[ JsonIgnore ]
-	public required ProgramArgs Args { get; init; }
+	public string? ProjectLicense { get; init; }
 
 	/// <summary>
 	///    List of packages that project depends upon
 	/// </summary>
 	public List< PackageInfo > Packages { get; } = [ ];
+
+	/// <summary>
+	///    Program arguments
+	/// </summary>
+	[ JsonIgnore ]
+	public required ProgramArgs Args { get; init; }
 
 	/// <summary>
 	///    List of Microsoft packages that project depends upon
